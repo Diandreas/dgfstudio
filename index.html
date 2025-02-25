@@ -1,0 +1,1108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- SEO Optimizations -->
+    <meta name="description" content="BGF Studio - Studio de création spécialisé en design graphique, photographie, web design et motion design au Cameroun. Services professionnels de création visuelle.">
+    <meta name="keywords" content="BGF Studio, design graphique, photographie, web design, motion design, Cameroun, studio créatif, création visuelle, montage vidéo">
+    <meta name="author" content="BGF Studio">
+    <meta name="robots" content="index, follow">
+
+    <title>BGF Studio - Design graphique & Création visuelle</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/magnific-popup.css" rel="stylesheet">
+    <link href="css/aos.css" rel="stylesheet">
+    <link href="css/templatemo-nomad-force.css" rel="stylesheet">
+
+    <style>
+
+        /* Conteneur principal avec perspective pour effet 3D */
+        .services-container {
+            perspective: 1000px;
+        }
+
+        /* Styles de base pour les services */
+        .service-item {
+            opacity: 0;
+            transform-style: preserve-3d;
+        }
+
+        .portfolio-thumb {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-image-container {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .image-wrapper {
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0);
+        }
+
+        .portfolio-image {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            height: auto;
+        }
+
+        /* Effet de survol amélioré */
+        .service-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    45deg,
+                    rgba(0, 0, 0, 0.7) 0%,
+                    rgba(0, 123, 255, 0.7) 100%
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(100%);
+        }
+
+        .service-overlay i {
+            color: white;
+            font-size: 2.5rem;
+            transform: scale(0) rotate(-180deg);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Animation de pulsation pour l'icône */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Effets de survol */
+        .service-image-container:hover .portfolio-image {
+            transform: scale(1.1) translateZ(0);
+        }
+
+        .service-image-container:hover .service-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-image-container:hover .service-overlay i {
+            transform: scale(1) rotate(0);
+        }
+
+
+        /* Amélioration du modal */
+        .modal-content {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal.fade .modal-dialog {
+            transform: scale(0.7) translateY(-50px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal.show .modal-dialog {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .service-item {
+                margin-bottom: 2rem;
+            }
+
+            .portfolio-thumb {
+                margin: 0 !important;
+            }
+        }
+
+        /* Animation spécifique pour les éléments qui entrent dans le viewport */
+        [data-aos="fade-right"] {
+            transform: translateX(-100px) rotateY(-10deg);
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-aos="fade-left"] {
+            transform: translateX(100px) rotateY(10deg);
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-aos="fade-right"].aos-animate,
+        [data-aos="fade-left"].aos-animate {
+            transform: translateX(0) rotateY(0);
+            opacity: 1;
+        }
+
+        .service-image-container {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+
+        .service-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-overlay i {
+            color: white;
+            font-size: 2rem;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-image-container:hover .portfolio-image {
+            transform: scale(1.05);
+        }
+
+        .service-image-container:hover .service-overlay {
+            opacity: 1;
+        }
+
+        .service-image-container:hover .service-overlay i {
+            transform: scale(1);
+        }
+
+        /* Styles pour le modal */
+        .modal-content {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .example-card {
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Animation de fade pour le modal */
+        .modal.fade .modal-dialog {
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-dialog {
+            transform: scale(1);
+        }
+        .service-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .service-modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 700px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* Ajout de styles pour les références */
+        .references-container {
+            padding: 2rem 0;
+        }
+
+        .reference-item {
+            padding: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+        }
+
+        .references-logo {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .reference-item:hover .references-logo {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .reference-item {
+                height: 100px;
+                padding: 0.75rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .reference-item {
+                height: 80px;
+                padding: 0.5rem;
+            }
+        }
+
+        .portfolio-container {
+            padding: 0rem 0;
+            margin: 0;
+        }
+
+        .portfolio-item {
+            margin-bottom: 20px;
+            break-inside: avoid;
+            perspective: 1000px;
+        }
+
+        .portfolio-thumb {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transform: translateZ(0);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    45deg,
+                    rgba(0, 0, 0, 0.4) 0%,
+                    rgba(0, 123, 255, 0.4) 100%
+            );
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            transform: translateY(100%);
+        }
+
+        .hover-content {
+            text-align: center;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .hover-content i {
+            color: white;
+            font-size: 2rem;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.4s ease;
+        }
+
+        /* Hover Effects */
+        .portfolio-thumb:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .portfolio-thumb:hover .portfolio-image {
+            transform: scale(1.05);
+        }
+
+        .portfolio-thumb:hover .hover-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .portfolio-thumb:hover .hover-content {
+            transform: translateY(0);
+        }
+
+        .portfolio-thumb:hover .hover-content i {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Animation pour les items qui entrent dans le viewport */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Magnific Popup customization */
+        .mfp-fade.mfp-bg {
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+
+        .mfp-fade.mfp-bg.mfp-ready {
+            opacity: 0.8;
+        }
+
+        .mfp-fade.mfp-bg.mfp-removing {
+            opacity: 0;
+        }
+
+        .mfp-fade.mfp-wrap .mfp-content {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease-out;
+        }
+
+        .mfp-fade.mfp-wrap.mfp-ready .mfp-content {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .portfolio-item {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .portfolio-item {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<main>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="heroText">
+            <img width="250px" src="images/logo-bgf-studio.png" alt="BGF Studio" class="text-white mt-5 mb-lg-4" data-aos="zoom-in" data-aos-delay="800">
+            <p class="text-secondary-white-color" data-aos="fade-up" data-aos-delay="1000">
+                Infiniment créatif pour rendre vos <strong class="custom-underline">projets uniques</strong>
+            </p>
+        </div>
+
+        <div class="videoWrapper">
+            <video autoplay="" loop="" muted="" class="custom-video" poster="videos/792bd98f3e617786c850493560e11c45.jpg">
+                <source src="videos/814dc43e870597176cad645798825c03.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+        </div>
+
+        <div class="overlay"></div>
+    </section>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-light shadow-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img width="150px" src="images/logblack.png" alt="BGF Studio">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#hero">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Notre Studio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Réserver maintenant</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- About Section with Team -->
+    <section class="section-padding pb-0" id="about">
+        <div class="container mb-5 pb-lg-5">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-3" data-aos="fade-up">Notre Studio</h2>
+                </div>
+
+                <div class="col-lg-6 col-12 mt-3 mb-lg-5">
+                    <p class="me-4" data-aos="fade-up" data-aos-delay="300">
+                        Nous sommes un studio de création spécialisé en design graphique, photographie et web design. Plus de 6 ans d'expérience dans la création de solutions visuelles innovantes.
+                    </p>
+                </div>
+
+                <div class="col-lg-6 col-12 mt-lg-3 mb-lg-5">
+                    <p data-aos="fade-up" data-aos-delay="500">
+                        Notre expertise couvre une large gamme de services créatifs pour répondre à tous vos besoins en communication visuelle.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-12 p-0">
+                    <img src="images/team.jpg" class="img-fluid about-image" alt="">
+                </div>
+
+                <div class="col-lg-3 col-12 bg-dark">
+                    <div class="d-flex flex-column flex-wrap justify-content-center h-100 py-5 px-4 pt-lg-4 pb-lg-0">
+                        <h3 class="text-white mb-3" data-aos="fade-up">Créativité et expertise au service de vos projets</h3>
+
+                        <p class="text-secondary-white-color" data-aos="fade-up">Plus de 6 ans dans le domaine de la création visuelle</p>
+
+                        <div class="mt-3 custom-links">
+                            <a href="#portfolio" class="text-white custom-link" data-aos="zoom-in" data-aos-delay="100">Découvrez nos réalisations</a>
+                            <a href="#contact" class="text-white custom-link" data-aos="zoom-in" data-aos-delay="300">Travaillez avec nous</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-12 p-0">
+                    <section id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-inner team-container">
+                            <!-- Team members will be loaded dynamically -->
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Précédent</span>
+                        </button>
+
+                        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Suivant</span>
+                        </button>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section-padding" id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-5 text-center" data-aos="fade-up">Nos Services</h2>
+                </div>
+            </div>
+            <div class="row services-container">
+                <!-- Services will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="section-padding" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class=" text-center" data-aos="fade-up">Portfolio</h2>
+                </div>
+            </div>
+            <div class="row portfolio-container">
+                <!-- Portfolio items will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="news section-padding" id="blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-5 text-center" data-aos="fade-up">News & Events</h2>
+                </div>
+            </div>
+            <div class="row blog-container">
+                <!-- Blog posts will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact section-padding" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-12 mx-auto">
+                    <h2 class="mb-4 text-center" data-aos="fade-up">Réserver maintenant</h2>
+
+                    <form action="#" method="post" class="contact-form" role="form" data-aos="fade-up">
+                        <div class="row">
+                            <div class="col-lg-6 col-6">
+                                <label for="name" class="form-label">Nom <sup class="text-danger">*</sup></label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Votre nom" required>
+                            </div>
+
+                            <div class="col-lg-6 col-6">
+                                <label for="email" class="form-label">Email <sup class="text-danger">*</sup></label>
+                                <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Votre email" required>
+                            </div>
+
+                            <div class="col-12 my-4">
+                                <label for="message" class="form-label">Votre projet</label>
+                                <textarea name="message" rows="6" class="form-control" id="message" placeholder="Décrivez votre projet" required></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Services souhaités<sup class="text-danger">*</sup></label>
+                            </div>
+
+                            <div class="col-lg-4 col-12">
+                                <div class="form-check">
+                                    <input type="checkbox" id="design" name="service[]" class="form-check-input">
+                                    <label class="form-check-label" for="design">Design graphique</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-12 my-2 my-lg-0">
+                                <div class="form-check">
+                                    <input type="checkbox" id="photo" name="service[]" class="form-check-input">
+                                    <label class="form-check-label" for="photo">Photographie</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-12">
+                                <div class="form-check">
+                                    <input type="checkbox" id="web" name="service[]" class="form-check-input">
+                                    <label class="form-check-label" for="web">Web Design</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5 col-12 mx-auto mt-5">
+                                <button type="submit" class="form-control">Envoyer le message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="references-section" id="references">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-5 text-center" data-aos="fade-up">Nos Références</h2>
+                </div>
+            </div>
+            <div class="row references-container">
+                <!-- Les références seront chargées dynamiquement -->
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h5 class="text-white">
+                        <i class="bi-geo-alt-fill me-2"></i>
+                        Cameroun
+                    </h5>
+
+                    <a href="mailto:bgfstudio.2022@gmail.com" class="custom-link mt-3 mb-5">
+                        bgfstudio.2022@gmail.com
+                    </a>
+                </div>
+
+                <div class="col-6">
+                    <p class="copyright-text mb-0">Copyright © BGF Studio 2024</p>
+                </div>
+
+                <div class="col-lg-3 col-5 ms-auto">
+                    <ul class="social-icon">
+                        <li><a href="#" class="social-icon-link bi-facebook"></a></li>
+                        <li><a href="#" class="social-icon-link bi-instagram"></a></li>
+                        <li><a href="#" class="social-icon-link bi-whatsapp"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Service Modal -->
+    <div id="serviceModal" class="service-modal">
+        <div class="service-modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+<!--    <script src="js/aos.js"></script>-->
+<!--    <script src="js/jquery.magnific-popup.min.js"></script>-->
+<!--    <script src="js/magnific-popup-options.js"></script>-->
+    <script src="js/scrollspy.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5.0.0/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
+    <script>
+        // Fonction pour charger l'équipe
+        function loadTeam() {
+            fetch('data/team.json')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.querySelector('.team-container');
+                    data.team.forEach((member, index) => {
+                        container.insertAdjacentHTML('beforeend', `
+                            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                <img src="${member.image}" class="img-fluid team-image" alt="${member.name}">
+                                <div class="team-thumb ${member.backgroundColor}">
+                                    <h3 class="text-white mb-0">${member.name}</h3>
+                                    <p class="text-secondary-white-color mb-0">${member.role}</p>
+                                </div>
+                            </div>
+                        `);
+                    });
+                });
+        }
+
+        // Fonction pour charger les services
+        // Correction de la fonction loadServices
+        // Fonction pour charger les services
+        function loadServices() {
+            fetch('data/services.json')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.querySelector('.services-container');
+                    const servicesHtml = data.services.map((service, index) => `
+        <div class="col-lg-3 col-12 service-item"
+             data-aos="${index % 2 === 0 ? 'fade-right' : 'fade-left'}"
+             data-aos-delay="${index * 150}"
+             data-aos-duration="1000"
+             data-aos-easing="ease-out-cubic">
+          <div class="portfolio-thumb ${index > 0 ? 'mt-5 mt-lg-0' : ''} mb-5">
+            <div class="service-image-container" onclick="showServiceModal('${service.id}')">
+              <div class="image-wrapper">
+                <img src="${service.image}"
+                     class="img-fluid portfolio-image rounded-lg shadow"
+                     alt="${service.title}">
+                <div class="service-overlay rounded-lg">
+                  <i class="fas fa-plus pulse"></i>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-info" data-aos="fade-up" data-aos-delay="${(index * 150) + 200}">
+              <h4 class="portfolio-title mb-0">${service.title}</h4>
+              <p class="text-danger">${service.shortDescription}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+                    container.innerHTML = servicesHtml;
+
+                    // Initialisation de AOS avec des paramètres améliorés
+                    AOS.init({
+                        duration: 1000,
+                        offset: 100,
+                        once: false,
+                        mirror: true,
+                        easing: 'ease-out-cubic',
+                        anchorPlacement: 'top-bottom'
+                    });
+                })
+                .catch(error => console.error('Erreur chargement services:', error));
+        }
+
+        // Fonction pour afficher le modal avec les détails du service
+        function showServiceModal(serviceId) {
+            fetch('data/services.json')
+                .then(response => response.json())
+                .then(data => {
+                    const service = data.services.find(s => s.id === serviceId);
+                    if (!service) return;
+
+                    const processHtml = service.process.map(p => `
+        <div class="process-step mb-4">
+          <h5 class="step-title">
+            <span class="step-number">${p.step}</span> ${p.title}
+          </h5>
+          <p class="step-description">${p.description}</p>
+        </div>
+      `).join('');
+
+                    const examplesHtml = service.examples.length ? `
+        <div class="service-examples mt-4">
+          <h4>Exemples de réalisations</h4>
+          <div class="row">
+            ${service.examples.map(example => `
+              <div class="col-md-6 mb-3">
+                <div class="example-card rounded-lg overflow-hidden">
+                  <img src="${example.image}" class="img-fluid" alt="${example.title}">
+                  <div class="example-info p-3">
+                    <h5>${example.title}</h5>
+                    <p>${example.description}</p>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
+                    const modalHtml = `
+        <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-lg">
+              <div class="modal-header border-0">
+                <h3 class="modal-title">${service.title}</h3>
+                <button type="button" class="close" data-dismiss="modal">
+                  <span>&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="service-image mb-4">
+                  <img src="${service.image}" class="img-fluid rounded-lg" alt="${service.title}">
+                </div>
+                <div class="service-description mb-4">
+                  ${service.fullDescription}
+                </div>
+                <div class="service-process">
+                  <h4>Notre processus</h4>
+                  ${processHtml}
+                </div>
+                ${examplesHtml}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+                    // Supprimer l'ancien modal s'il existe
+                    const oldModal = document.getElementById('serviceModal');
+                    if (oldModal) oldModal.remove();
+
+                    // Ajouter le nouveau modal au body
+                    document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+                    // Afficher le modal avec animation
+                    $('#serviceModal').modal('show');
+                })
+                .catch(error => console.error('Erreur chargement détails service:', error));
+        }
+
+        function loadPortfolio() {
+            fetch('data/portfolio.json')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.querySelector('.portfolio-container');
+                    let portfolioHtml = '';
+
+                    data.categories.forEach(category => {
+                        category.works.forEach((work, index) => {
+                            portfolioHtml += `
+            <div class="portfolio-item col-lg-3 col-md-6 col-12"
+                 data-aos="fade-up"
+                 data-aos-delay="${index * 100}"
+                 data-aos-duration="800"
+                 data-aos-easing="ease-out-cubic">
+              <div class="portfolio-thumb">
+                <div class="image-container">
+                  <a href="${work.image}" class="image-popup">
+                    <img src="${work.image}"
+                         class="img-fluid portfolio-image"
+                         alt="Portfolio item"
+                         loading="lazy">
+                    <div class="hover-overlay">
+                      <div class="hover-content">
+                        <i class="fas fa-search-plus"></i>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          `;
+                        });
+                    });
+
+                    container.innerHTML = portfolioHtml;
+
+                    // Initialisation de Masonry après le chargement des images
+                    imagesLoaded(container, function() {
+                        const masonry = new Masonry(container, {
+                            itemSelector: '.portfolio-item',
+                            columnWidth: '.portfolio-item',
+                            percentPosition: true,
+                            transitionDuration: '0.3s',
+                            gutter: 20
+                        });
+
+                        // Réinitialiser Masonry après chaque animation AOS
+                        document.addEventListener('aos:in', () => {
+                            masonry.layout();
+                        });
+                    });
+
+                    // Initialisation de AOS
+                    AOS.init({
+                        duration: 800,
+                        easing: 'ease-out-cubic',
+                        once: false,
+                        mirror: true,
+                        offset: 50
+                    });
+
+                    // Initialisation de Magnific Popup
+                    $('.image-popup').magnificPopup({
+                        type: 'image',
+                        gallery: {
+                            enabled: true,
+                            navigateByImgClick: true,
+                            preload: [0, 1]
+                        },
+                        removalDelay: 300,
+                        mainClass: 'mfp-fade',
+                        zoom: {
+                            enabled: true,
+                            duration: 300,
+                            easing: 'ease-in-out'
+                        }
+                    });
+                })
+                .catch(error => console.error('Erreur chargement portfolio:', error));
+        }
+
+        function loadBlogPosts() {
+            fetch('data/blog.json')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.querySelector('.blog-container');
+                    let blogHtml = '';
+
+                    data.posts.forEach((post, index) => {
+                        if (index === 0) {
+                            blogHtml += `
+                                <div class="col-lg-6 col-12 mb-5 mb-lg-0">
+                                    <div class="news-thumb" data-aos="fade-up">
+                                        <a href="news-detail.html?id=${post.id}" class="news-image-hover news-image-hover-warning">
+                                            <img src="${post.image}" class="img-fluid large-news-image news-image" alt="${post.title}">
+                                        </a>
+                                        <div class="news-category bg-warning text-white">${post.category}</div>
+                                        <div class="news-text-info">
+                                            <h5 class="news-title">
+                                                <a href="news-detail.html?id=${post.id}" class="news-title-link">${post.title}</a>
+                                            </h5>
+                                            <span class="text-muted">${post.date}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            blogHtml += `
+                                <div class="col-lg-6 col-12">
+                                    <div class="news-thumb news-two-column d-flex flex-column flex-lg-row" data-aos="fade-up">
+                                        <div class="news-top w-100">
+                                            <a href="news-detail.html?id=${post.id}" class="news-image-hover news-image-hover-warning">
+                                                <img src="${post.image}" class="img-fluid news-image" alt="${post.title}">
+                                            </a>
+                                            <div class="news-category bg-warning text-white">${post.category}</div>
+                                        </div>
+                                        <div class="news-bottom w-100">
+                                            <div class="news-text-info">
+                                                <h5 class="news-title">
+                                                    <a href="news-detail.html?id=${post.id}" class="news-title-link">${post.title}</a>
+                                                </h5>
+                                                <span class="text-muted">${post.date}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    });
+
+                    container.innerHTML = blogHtml;
+                })
+                .catch(error => console.error('Erreur chargement blog:', error));
+        }
+
+        // Fonction pour charger les références
+        function loadReferences() {
+            fetch('data/references.json')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.querySelector('.references-container');
+
+                    const referencesHtml = data.references.map((reference, index) => `
+        <div class="col-lg-2 col-md-3 col-4"
+             data-aos="fade-up"
+             data-aos-delay="${index * 100}"
+             data-aos-duration="800">
+          <div class="reference-item">
+            <img src="${reference.logo}"
+                 class="references-logo img-fluid"
+                 alt="Logo référence"
+                 loading="lazy">
+          </div>
+        </div>
+      `).join('');
+
+                    container.innerHTML = referencesHtml;
+
+                    // Initialisation de AOS
+                    AOS.init({
+                        duration: 800,
+                        once: true,
+                        offset: 50
+                    });
+                })
+                .catch(error => console.error('Erreur chargement références:', error));
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTeam();
+            loadServices();
+            loadPortfolio();
+            loadBlogPosts();
+            loadReferences();
+            initializeModalHandlers();
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                offset: 100
+            });
+        });
+
+        // Initialisation des gestionnaires de modal
+        function initializeModalHandlers() {
+            const modal = document.getElementById('serviceModal');
+            const closeBtn = document.querySelector('.close');
+
+            closeBtn.onclick = function() {
+                modal.style.display = 'none';
+            };
+
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            };
+        }
+
+        // Initialisation de Magnific Popup
+        function initializeMagnificPopup() {
+            $('.image-popup').magnificPopup({
+                type: 'image',
+                gallery: {
+                    enabled: true
+                },
+                removalDelay: 300,
+                mainClass: 'mfp-fade'
+            });
+        }
+    </script>
+    </main>
+</body>
+</html>

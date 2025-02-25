@@ -1,0 +1,32 @@
+{
+  "references": [
+    {
+      "id": "6",
+      "logo": "images/references/6.png"
+    },
+    {
+      "id": "7",
+      "logo": "images/references/7.png"
+    },
+    {
+      "id": "amicaledu",
+      "logo": "images/references/amicaledu.png"
+    },
+    {
+      "id": "atks",
+      "logo": "images/references/atks.png"
+    },
+    {
+      "id": "auryfish",
+      "logo": "images/references/auryfish.png"
+    },
+    {
+      "id": "chindjo",
+      "logo": "images/references/chindjo.png"
+    },
+    {
+      "id": "fcsmed",
+      "logo": "images/references/fcsmed.png"
+    }
+  ]
+}

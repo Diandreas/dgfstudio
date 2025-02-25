@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <!-- Mêmes meta tags et styles que l'index -->
+    <title>BGF Studio - Article Blog</title>
+
+    <style>
+        /* Styles spécifiques pour la page blog */
+        .blog-detail-hero {
+            height: 60vh;
+            background-color: var(--primary-color);
+            position: relative;
+        }
+
+        .blog-detail-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .blog-detail-title {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            color: var(--white);
+            max-width: 800px;
+        }
+
+        .blog-meta {
+            color: var(--accent-color);
+            margin: 2rem 0;
+        }
+
+        .blog-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--secondary-color);
+        }
+
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 2rem 0;
+        }
+
+        .related-posts {
+            background-color: var(--light-gray);
+            padding: 4rem 0;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Navigation -->
+[Navigation identique à l'index]
+
+<!-- Article Content -->
+<div class="blog-detail-hero">
+    <img src="" alt="" class="blog-detail-image" id="blogImage">
+    <div class="container">
+        <h1 class="blog-detail-title" id="blogTitle"></h1>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="blog-meta">
+                <span class="date" id="blogDate"></span>
+                <span class="category" id="blogCategory"></span>
+            </div>
+            <div class="blog-content" id="blogContent"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Related Posts -->
+<section class="related-posts">
+    <div class="container">
+        <h3 class="mb-4">Articles similaires</h3>
+        <div class="row" id="relatedPosts"></div>
+    </div>
+</section>
+
+<script>
+    async function loadBlogPost() {
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('id');
+
+            const response = await fetch('data/blog.json');
+            const data = await response.json();
+            const post = data.posts.find(p => p.id === postId);
+
+            if (!post) {
+                window.location.href = 'index.html#blog';
+                return;
+            }
+
+            document.getElementById('blogImage').src = post.image;
+            document.getElementById('blogTitle').textContent = post.title;
+            document.getElementById('blogDate').textContent = post.date;
+            document.getElementById('blogCategory').textContent = post.category;
+            document.getElementById('blogContent').innerHTML = post.fullContent;
+
+            loadRelatedPosts(post.category, post.id);
+        } catch (error) {
+            console.error('Erreur chargement article:', error);
+        }
+    }
+
+    async function loadRelatedPosts(category, currentId) {
+        try {
+            const response = await fetch('data/blog.json');
+            const data = await response.json();
+            const relatedPosts = data.posts
+                .filter(p => p.category === category && p.id !== currentId)
+                .slice(0, 3);
+
+            const container = document.getElementById('relatedPosts');
+            relatedPosts.forEach(post => {
+                const postElement = createRelatedPostCard(post);
+                container.appendChild(postElement);
+            });
+        } catch (error) {
+            console.error('Erreur chargement articles similaires:', error);
+        }
+    }
+
+    function createRelatedPostCard(post) {
+        const div = document.createElement('div');
+        div.className = 'col-lg-4 col-md-6 mb-4';
+        div.innerHTML = `
+                <div class="card">
+                    <img src="${post.image}" class="card-img-top" alt="${post.title}">
+                    <div class="card-body">
+                        <h5 class="card-title">${post.title}</h5>
+                        <p class="card-text">${post.shortDescription}</p>
+                        <a href="blog-detail.html?id=${post.id}" class="btn btn-primary">Lire plus</a>
+                    </div>
+                </div>
+            `;
+        return div;
+    }
+
+    document.addEventListener('DOMContentLoaded', loadBlogPost);
+</script>
+</body>
+</html>

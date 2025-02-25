@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "id": "semaine-qualite-air",
+      "title": "Semaine de la qualité de l'air à Yaoundé",
+      "category": "Events",
+      "image": "images/news/caroline-lm-uqveD8dYPUM-unsplash.jpg",
+      "date": "2023",
+      "shortDescription": "Design graphique des supports de communication pour la Semaine de la qualité de l'air",
+      "fullContent": "Création complète des supports de communication pour la Semaine de la qualité de l'air à Yaoundé, incluant affiches, flyers et supports digitaux."
+    },
+    {
+      "id": "archives-nationales",
+      "title": "Semaine Internationale des Archives",
+      "category": "News",
+      "image": "images/news/jean-philippe-delberghe-MmanXAs1sKw-unsplash.jpeg",
+      "date": "2022",
+      "shortDescription": "Design graphique Print et audiovisuel des supports de communication",
+      "fullContent": "Conception et réalisation de l'ensemble des supports de communication pour la Semaine Internationale des Archives au Cameroun."
+    }
+  ]
+}

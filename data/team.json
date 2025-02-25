@@ -1,0 +1,12 @@
+
+{
+  "team": [
+    {
+      "name": "Francis BOUNA GUEDJIO",
+      "role": "Directeur Artistique",
+      "image": "images/people/buna.jpg",
+      "backgroundColor": "bg-dark",
+      "isActive": true
+    }
+  ]
+}

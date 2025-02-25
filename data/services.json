@@ -1,0 +1,267 @@
+{
+  "services": [
+    {
+      "id": "design-graphique",
+      "title": "Design Graphique",
+      "shortDescription": "Création d'identités visuelles, logotypes, chartes graphiques",
+      "image": "images/services/designgraphique.png",
+      "fullDescription": "Nos services de design graphique couvrent tous vos besoins en communication visuelle. De la conception de logo à la mise en page complète de vos documents, nous créons des designs percutants qui reflètent votre identité.",
+      "process": [
+        {
+          "step": 1,
+          "title": "Brief & Analyse",
+          "description": "Réunion de découverte pour comprendre vos besoins, objectifs et valeurs"
+        },
+        {
+          "step": 2,
+          "title": "Recherche & Concepts",
+          "description": "Étude de marché, recherche créative et présentation des premières pistes"
+        },
+        {
+          "step": 3,
+          "title": "Design & Itérations",
+          "description": "Développement des concepts choisis et affinement selon vos retours"
+        },
+        {
+          "step": 4,
+          "title": "Finalisation",
+          "description": "Livraison des fichiers finaux dans tous les formats nécessaires"
+        }
+      ],
+      "examples": [
+        {
+          "title": "Logotypes et chartes graphiques",
+          "image": "images/portfolio/visuals-Y4qzW3AsvqI-unsplash.jpeg",
+          "description": "Création d'identités visuelles complètes"
+        },
+        {
+          "title": "Mise en page supports Print",
+          "image": "images/portfolio/severin-candrian-nn3uIZqmUtE-unsplash.jpeg",
+          "description": "Brochures, rapports, catalogues"
+        }
+      ]
+    },
+    {
+      "id": "design-et-illustration",
+      "title": "Design et Illustration",
+      "shortDescription": "Création d'illustrations et designs sur mesure",
+      "image": "images/services/designetillustration.png",
+      "fullDescription": "Services de création d'illustrations et designs personnalisés pour tous vos projets de communication visuelle.",
+      "process": [
+        {
+          "step": 1,
+          "title": "Brief créatif",
+          "description": "Discussion approfondie sur vos besoins et objectifs"
+        },
+        {
+          "step": 2,
+          "title": "Recherche stylistique",
+          "description": "Exploration des directions créatives et styles"
+        },
+        {
+          "step": 3,
+          "title": "Création",
+          "description": "Réalisation des illustrations et designs"
+        },
+        {
+          "step": 4,
+          "title": "Finalisation",
+          "description": "Livraison dans les formats adaptés à vos besoins"
+        }
+      ],
+      "examples": []
+    },
+    {
+      "id": "conseils-et-formation",
+      "title": "Conseils et Formation",
+      "shortDescription": "Accompagnement et formation en design",
+      "image": "images/services/conseilsetformation.png",
+      "fullDescription": "Services de conseil et formation pour vous aider à maîtriser les outils et techniques du design.",
+      "process": [
+        {
+          "step": 1,
+          "title": "Évaluation",
+          "description": "Analyse de vos besoins en formation"
+        },
+        {
+          "step": 2,
+          "title": "Programme",
+          "description": "Création d'un programme personnalisé"
+        },
+        {
+          "step": 3,
+          "title": "Formation",
+          "description": "Sessions de formation pratique"
+        },
+        {
+          "step": 4,
+          "title": "Suivi",
+          "description": "Accompagnement post-formation"
+        }
+      ],
+      "examples": []
+    },
+    {
+      "id": "montage-video",
+      "title": "Montage Vidéo",
+      "shortDescription": "Création et montage de contenus vidéo",
+      "image": "images/services/montagevideo.png",
+      "fullDescription": "Services complets de montage vidéo pour vos projets audiovisuels.",
+      "process": [
+        {
+          "step": 1,
+          "title": "Consultation",
+          "description": "Définition des objectifs et du style"
+        },
+        {
+          "step": 2,
+          "title": "Montage",
+          "description": "Assemblage et édition des séquences"
+        },
+        {
+          "step": 3,
+          "title": "Post-production",
+          "description": "Effets, transitions et corrections"
+        },
+        {
+          "step": 4,
+          "title": "Export",
+          "description": "Livraison dans les formats requis"
+        }
+      ],
+      "examples": []
+    },
+    {
+      "id": "motion-design",
+      "title": "Motion Design",
+      "shortDescription": "Animation et design en mouvement",
+      "image": "images/services/motiondesign.png",
+      "fullDescription": "Création d'animations et de designs en mouvement pour dynamiser vos contenus.",
+      "process": [
+        {
+          "step": 1,
+          "title": "Concept",
+          "description": "Développement de l'idée créative"
+        },
+        {
+          "step": 2,
+          "title": "Storyboard",
+          "description": "Création du scénario visuel"
+        },
+        {
+          "step": 3,
+          "title": "Animation",
+          "description": "Réalisation des animations"
+        },
+        {
+          "step": 4,
+          "title": "Rendu",
+          "description": "Export et finalisation"
+        }
+      ],
+      "examples": []
+    },
+    {
+      "id": "photographie",
+      "title": "Photographie",
+      "shortDescription": "Services photo professionnels indoor/outdoor",
+      "image": "images/services/photographe.png",
+      "fullDescription": "De la prise de vue à la retouche finale, nous assurons des prestations photographiques de haute qualité adaptées à tous vos projets.",
+      "process": [
+        {
+          "step": 1,
+          "title": "Consultation",
+          "description": "Discussion sur vos besoins et planification de la séance"
+        },
+        {
+          "step": 2,
+          "title": "Préparation",
+          "description": "Organisation du shooting, choix des lieux et équipements"
+        },
+        {
+          "step": 3,
+          "title": "Réalisation",
+          "description": "Session photo professionnelle selon le brief établi"
+        },
+        {
+          "step": 4,
+          "title": "Post-production",
+          "description": "Sélection, retouche et optimisation des images"
+        }
+      ],
+      "examples": [
+        {
+          "title": "Shooting professionnel",
+          "image": "images/portfolio/tyler-nix-Y1drF0Y3Oe0-unsplash.jpeg",
+          "description": "Photos studio et extérieur"
+        }
+      ]
+    },
+    {
+      "id": "strategie",
+      "title": "Stratégie",
+      "shortDescription": "Conseil en stratégie de communication",
+      "image": "images/services/strategie.png",
+      "fullDescription": "Accompagnement stratégique pour optimiser votre communication et atteindre vos objectifs.",
+      "process": [
+        {
+          "step": 1,
+          "title": "Audit",
+          "description": "Analyse de votre communication actuelle"
+        },
+        {
+          "step": 2,
+          "title": "Stratégie",
+          "description": "Développement du plan d'action"
+        },
+        {
+          "step": 3,
+          "title": "Mise en œuvre",
+          "description": "Déploiement des actions"
+        },
+        {
+          "step": 4,
+          "title": "Évaluation",
+          "description": "Mesure des résultats"
+        }
+      ],
+      "examples": []
+    },
+    {
+      "id": "web-design",
+      "title": "Web Design",
+      "shortDescription": "Création de sites web responsive et intuitifs",
+      "image": "images/services/webdesign.png",
+      "fullDescription": "Nous concevons des sites web modernes, responsives et optimisés pour une expérience utilisateur exceptionnelle.",
+      "process": [
+        {
+          "step": 1,
+          "title": "Analyse des besoins",
+          "description": "Définition des objectifs et fonctionnalités du site"
+        },
+        {
+          "step": 2,
+          "title": "Architecture & Wireframes",
+          "description": "Création de la structure et des maquettes fil de fer"
+        },
+        {
+          "step": 3,
+          "title": "Design & Validation",
+          "description": "Création des maquettes graphiques et ajustements"
+        },
+        {
+          "step": 4,
+          "title": "Développement",
+          "description": "Intégration responsive et tests de compatibilité"
+        }
+      ],
+      "examples": [
+        {
+          "title": "Sites Web Responsives",
+          "image": "images/portfolio/thought-catalog-gv-T-OjLe4c-unsplash.jpeg",
+          "description": "Interfaces modernes et adaptatives"
+        }
+      ]
+    }
+  ]
+}
