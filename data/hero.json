@@ -1,0 +1,28 @@
+{
+  "heroImages": [
+    {
+      "id": "hero1",
+      "image": "images/caroussel/IMG-20250224-WA0014.jpg",
+      "title": "Design graphique créatif",
+      "subtitle": "Solutions visuelles innovantes"
+    },
+    {
+      "id": "hero2",
+      "image": "images/caroussel/IMG-20250224-WA0015.jpg",
+      "title": "Excellence en photographie",
+      "subtitle": "Capturez les moments importants"
+    },
+    {
+      "id": "hero3",
+      "image": "images/caroussel/IMG-20250224-WA0016.jpg",
+      "title": "Web design moderne",
+      "subtitle": "Présence en ligne impactante"
+    },
+    {
+      "id": "hero4",
+      "image": "images/caroussel/IMG-20250224-WA0017.jpg",
+      "title": "Motion design dynamique",
+      "subtitle": "Donnez vie à vos idées"
+    }
+  ]
+}
