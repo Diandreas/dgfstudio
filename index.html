@@ -12,18 +12,17 @@
 
     <title>BGF Studio - Design graphique & Création visuelle</title>
 
-    <!-- CSS FILES -->
+    <!-- CSS FILES - Utilisation de CDNs au lieu de fichiers locaux -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;400;700;900&display=swap" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-icons.css" rel="stylesheet">
-    <link href="css/magnific-popup.css" rel="stylesheet">
-    <link href="css/aos.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="css/templatemo-nomad-force.css" rel="stylesheet">
 
     <style>
-
         /* Conteneur principal avec perspective pour effet 3D */
         .services-container {
             perspective: 1000px;
@@ -319,171 +318,233 @@
             }
         }
 
+        /* NOUVEAU STYLE POUR LE PORTFOLIO */
+        .portfolio-section {
+            padding: 4rem 0;
+            background-color: #f9f9f9;
+        }
+
+        .portfolio-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            gap: 10px;
+        }
+
+        .portfolio-filter-btn {
+            padding: 8px 20px;
+            border: none;
+            background-color: #fff;
+            color: #333;
+            font-weight: 500;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .portfolio-filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .portfolio-filter-btn.active {
+            background-color: #dc3545;
+            color: white;
+        }
+
         .portfolio-container {
-            padding: 0rem 0;
-            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 1rem 0;
         }
 
         .portfolio-item {
-            margin-bottom: 20px;
-            break-inside: avoid;
-            perspective: 1000px;
-        }
-
-        .portfolio-thumb {
             position: relative;
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            transform: translateZ(0);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
+            transition: all 0.4s ease;
+            height: 100%;
+            opacity: 1;
+            transform: scale(1);
         }
 
-        .image-container {
+        .portfolio-item.hidden {
+            display: none;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .portfolio-item-image {
             position: relative;
             overflow: hidden;
+            height: 250px;
         }
 
-        .portfolio-image {
+        .portfolio-item-image img {
             width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
         }
 
-        .hover-overlay {
+        .portfolio-item:hover .portfolio-item-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .portfolio-item:hover .portfolio-item-overlay {
+            transform: translateY(0);
+        }
+
+        .portfolio-item-content {
+            padding: 20px;
+            background-color: white;
+        }
+
+        .portfolio-item-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .portfolio-item-category {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: #f0f0f0;
+            color: #666;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-item-year {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .portfolio-item-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .portfolio-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Animation d'apparition */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .portfolio-item {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Pour le hero carousel */
+        .hero-carousel {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-carousel-item {
+            height: 100vh;
+            background-position: center;
+            background-size: cover;
+            position: relative;
+        }
+
+        .hero-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(
-                    45deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 123, 255, 0.4) 100%
-            );
-            opacity: 0;
+            background: rgba(0, 0, 0, 0.5);
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            transition: all 0.4s ease;
-            transform: translateY(100%);
-        }
-
-        .hover-content {
+            align-items: center;
             text-align: center;
-            transform: translateY(20px);
-            transition: all 0.4s ease;
-        }
-
-        .hover-content i {
             color: white;
-            font-size: 2rem;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: all 0.4s ease;
         }
 
-        /* Hover Effects */
-        .portfolio-thumb:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .portfolio-thumb:hover .portfolio-image {
-            transform: scale(1.05);
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
 
-        .portfolio-thumb:hover .hover-overlay {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .portfolio-thumb:hover .hover-content {
-            transform: translateY(0);
-        }
-
-        .portfolio-thumb:hover .hover-content i {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        /* Animation pour les items qui entrent dans le viewport */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translate3d(0, 40px, 0);
-            }
-            to {
-                opacity: 1;
-                transform: translate3d(0, 0, 0);
-            }
-        }
-
-        /* Magnific Popup customization */
-        .mfp-fade.mfp-bg {
-            opacity: 0;
-            transition: all 0.3s ease-out;
-        }
-
-        .mfp-fade.mfp-bg.mfp-ready {
-            opacity: 0.8;
-        }
-
-        .mfp-fade.mfp-bg.mfp-removing {
-            opacity: 0;
-        }
-
-        .mfp-fade.mfp-wrap .mfp-content {
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.3s ease-out;
-        }
-
-        .mfp-fade.mfp-wrap.mfp-ready .mfp-content {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
-            opacity: 0;
-            transform: scale(0.8);
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .portfolio-item {
-                width: 50%;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .portfolio-item {
-                width: 100%;
-            }
+        .hero-logo {
+            margin-bottom: 2rem;
+            max-width: 250px;
         }
     </style>
 </head>
 
 <body>
 <main>
-    <!-- Hero Section -->
+    <!-- Hero Section - Now as a Dynamic Carousel -->
     <section class="hero" id="hero">
-        <div class="heroText">
-            <img width="250px" src="images/logo-bgf-studio.png" alt="BGF Studio" class="text-white mt-5 mb-lg-4" data-aos="zoom-in" data-aos-delay="800">
-            <p class="text-secondary-white-color" data-aos="fade-up" data-aos-delay="1000">
-                Infiniment créatif pour rendre vos <strong class="custom-underline">projets uniques</strong>
-            </p>
-        </div>
+        <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner hero-carousel-container">
+                <!-- Hero carousel items will be loaded dynamically -->
+            </div>
 
-        <div class="videoWrapper">
-            <video autoplay="" loop="" muted="" class="custom-video" poster="videos/792bd98f3e617786c850493560e11c45.jpg">
-                <source src="videos/814dc43e870597176cad645798825c03.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la lecture vidéo.
-            </video>
-        </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Précédent</span>
+            </button>
 
-        <div class="overlay"></div>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Suivant</span>
+            </button>
+        </div>
     </section>
 
     <!-- Navigation -->
@@ -509,6 +570,9 @@
                         <a class="nav-link" href="#services">Services</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#blog">Blog</a>
                     </li>
                     <li class="nav-item">
@@ -518,6 +582,7 @@
             </div>
         </div>
     </nav>
+
     <!-- About Section with Team -->
     <section class="section-padding pb-0" id="about">
         <div class="container mb-5 pb-lg-5">
@@ -595,15 +660,25 @@
     </section>
 
     <!-- Portfolio Section -->
-    <section class="section-padding" id="portfolio">
+    <section class="portfolio-section" id="portfolio">
         <div class="container">
             <div class="row">
+                <div class="col-12 mb-5">
+                    <h2 class="text-center mb-4" data-aos="fade-up">Notre Portfolio</h2>
+                    <p class="text-center" data-aos="fade-up" data-aos-delay="200">
+                        Découvrez une sélection de nos meilleures réalisations dans différents domaines de création.
+                    </p>
+                </div>
                 <div class="col-12">
-                    <h2 class=" text-center" data-aos="fade-up">Portfolio</h2>
+                    <div class="portfolio-filter" data-aos="fade-up" data-aos-delay="300">
+                        <button class="portfolio-filter-btn active" data-filter="all">Tous les projets</button>
+                        <!-- Les boutons de filtre seront chargés dynamiquement -->
+                    </div>
                 </div>
             </div>
-            <div class="row portfolio-container">
-                <!-- Portfolio items will be loaded dynamically -->
+
+            <div class="portfolio-container">
+                <!-- Les éléments du portfolio seront chargés dynamiquement -->
             </div>
         </div>
     </section>
@@ -680,6 +755,8 @@
             </div>
         </div>
     </section>
+
+    <!-- References Section -->
     <section class="references-section" id="references">
         <div class="container">
             <div class="row">
@@ -692,6 +769,7 @@
             </div>
         </div>
     </section>
+
     <!-- Footer -->
     <footer class="site-footer">
         <div class="container">
@@ -730,21 +808,120 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT FILES -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-<!--    <script src="js/aos.js"></script>-->
-<!--    <script src="js/jquery.magnific-popup.min.js"></script>-->
-<!--    <script src="js/magnific-popup-options.js"></script>-->
-    <script src="js/scrollspy.min.js"></script>
-    <script src="js/custom.js"></script>
+    <!-- Portfolio Modal -->
+    <div class="modal fade" id="portfolioModal" tabindex="-1" aria-labelledby="portfolioModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="portfolioModalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="portfolioModalBody">
+                    <!-- Le contenu détaillé du projet sera chargé ici -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT FILES - Utilisation de CDNs au lieu de fichiers locaux -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
     <script src="https://unpkg.com/imagesloaded@5.0.0/imagesloaded.pkgd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="js/custom.js"></script>
 
     <script>
+        // Fonction pour charger le carousel hero
+        function loadHeroCarousel() {
+            fetch('data/hero.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to load hero data');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const container = document.querySelector('.hero-carousel-container');
+
+                    // Vider le contenu existant
+                    container.innerHTML = '';
+
+                    // Ajouter chaque image hero au carousel
+                    data.heroImages.forEach((item, index) => {
+                        container.insertAdjacentHTML('beforeend', `
+                            <div class="carousel-item ${index === 0 ? 'active' : ''}" data-bs-interval="5000">
+                                <div class="hero-carousel-item" style="background-image: url('${item.image}')">
+                                    <div class="hero-overlay">
+                                        <img src="images/logo-bgf-studio.png" alt="BGF Studio" class="hero-logo" data-aos="zoom-in" data-aos-delay="500">
+                                        <h1 class="hero-title" data-aos="fade-up" data-aos-delay="700">${item.title}</h1>
+                                        <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="900">
+                                            ${item.subtitle}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    });
+
+                    // Créer les indicateurs du carousel
+                    const indicators = document.createElement('div');
+                    indicators.className = 'carousel-indicators';
+
+                    data.heroImages.forEach((_, index) => {
+                        indicators.insertAdjacentHTML('beforeend', `
+                            <button type="button"
+                                    data-bs-target="#heroCarousel"
+                                    data-bs-slide-to="${index}"
+                                    ${index === 0 ? 'class="active" aria-current="true"' : ''}
+                                    aria-label="Slide ${index + 1}">
+                            </button>
+                        `);
+                    });
+
+                    // Ajouter les indicateurs au carousel
+                    const carousel = document.getElementById('heroCarousel');
+                    carousel.prepend(indicators);
+
+                    // Initialiser le carousel avec Bootstrap
+                    const carouselInstance = new bootstrap.Carousel(carousel, {
+                        interval: 5000,
+                        wrap: true,
+                        keyboard: true,
+                        pause: 'hover',
+                        touch: true
+                    });
+
+                    // Ajouter des écouteurs d'événements pour les événements du carousel
+                    carousel.addEventListener('slide.bs.carousel', function (event) {
+                        // Réinitialiser les animations AOS pour la prochaine diapositive
+                        setTimeout(() => {
+                            AOS.refresh();
+                        }, 500);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erreur chargement hero carousel:', error);
+                    // Fallback vers une image hero statique en cas d'échec
+                    const container = document.querySelector('.hero-carousel-container');
+                    container.innerHTML = `
+                        <div class="carousel-item active">
+                            <div class="hero-carousel-item" style="background-image: url('images/caroussel/IMG-20250224-WA0014.jpg')">
+                                <div class="hero-overlay">
+                                    <img src="images/logo-bgf-studio.png" alt="BGF Studio" class="hero-logo">
+                                    <h1 class="hero-title">BGF Studio</h1>
+                                    <p class="hero-subtitle">
+                                        Infiniment créatif pour rendre vos <strong>projets uniques</strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+        }
+
         // Fonction pour charger l'équipe
         function loadTeam() {
             fetch('data/team.json')
@@ -766,54 +943,42 @@
         }
 
         // Fonction pour charger les services
-        // Correction de la fonction loadServices
-        // Fonction pour charger les services
         function loadServices() {
             fetch('data/services.json')
                 .then(response => response.json())
                 .then(data => {
                     const container = document.querySelector('.services-container');
                     const servicesHtml = data.services.map((service, index) => `
-        <div class="col-lg-3 col-12 service-item"
-             data-aos="${index % 2 === 0 ? 'fade-right' : 'fade-left'}"
-             data-aos-delay="${index * 150}"
-             data-aos-duration="1000"
-             data-aos-easing="ease-out-cubic">
-          <div class="portfolio-thumb ${index > 0 ? 'mt-5 mt-lg-0' : ''} mb-5">
-            <div class="service-image-container" onclick="showServiceModal('${service.id}')">
-              <div class="image-wrapper">
-                <img src="${service.image}"
-                     class="img-fluid portfolio-image rounded-lg shadow"
-                     alt="${service.title}">
-                <div class="service-overlay rounded-lg">
-                  <i class="fas fa-plus pulse"></i>
-                </div>
-              </div>
-            </div>
-            <div class="portfolio-info" data-aos="fade-up" data-aos-delay="${(index * 150) + 200}">
-              <h4 class="portfolio-title mb-0">${service.title}</h4>
-              <p class="text-danger">${service.shortDescription}</p>
-            </div>
-          </div>
-        </div>
-      `).join('');
+                        <div class="col-lg-3 col-12 service-item"
+                            data-aos="${index % 2 === 0 ? 'fade-right' : 'fade-left'}"
+                            data-aos-delay="${index * 150}"
+                            data-aos-duration="1000"
+                            data-aos-easing="ease-out-cubic">
+                            <div class="portfolio-thumb ${index > 0 ? 'mt-5 mt-lg-0' : ''} mb-5">
+                                <div class="service-image-container" onclick="showServiceModal('${service.id}')">
+                                    <div class="image-wrapper">
+                                        <img src="${service.image}"
+                                            class="img-fluid portfolio-image rounded-lg shadow"
+                                            alt="${service.title}">
+                                        <div class="service-overlay rounded-lg">
+                                            <i class="bi bi-plus-circle pulse"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-info" data-aos="fade-up" data-aos-delay="${(index * 150) + 200}">
+                                    <h4 class="portfolio-title mb-0">${service.title}</h4>
+                                    <p class="text-danger">${service.shortDescription}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
 
                     container.innerHTML = servicesHtml;
-
-                    // Initialisation de AOS avec des paramètres améliorés
-                    AOS.init({
-                        duration: 1000,
-                        offset: 100,
-                        once: false,
-                        mirror: true,
-                        easing: 'ease-out-cubic',
-                        anchorPlacement: 'top-bottom'
-                    });
                 })
                 .catch(error => console.error('Erreur chargement services:', error));
         }
 
-        // Fonction pour afficher le modal avec les détails du service
+        // Fonction pour afficher le modal des services
         function showServiceModal(serviceId) {
             fetch('data/services.json')
                 .then(response => response.json())
@@ -822,60 +987,60 @@
                     if (!service) return;
 
                     const processHtml = service.process.map(p => `
-        <div class="process-step mb-4">
-          <h5 class="step-title">
-            <span class="step-number">${p.step}</span> ${p.title}
-          </h5>
-          <p class="step-description">${p.description}</p>
-        </div>
-      `).join('');
+                        <div class="process-step mb-4">
+                            <h5 class="step-title">
+                                <span class="step-number">${p.step}</span> ${p.title}
+                            </h5>
+                            <p class="step-description">${p.description}</p>
+                        </div>
+                    `).join('');
 
                     const examplesHtml = service.examples.length ? `
-        <div class="service-examples mt-4">
-          <h4>Exemples de réalisations</h4>
-          <div class="row">
-            ${service.examples.map(example => `
-              <div class="col-md-6 mb-3">
-                <div class="example-card rounded-lg overflow-hidden">
-                  <img src="${example.image}" class="img-fluid" alt="${example.title}">
-                  <div class="example-info p-3">
-                    <h5>${example.title}</h5>
-                    <p>${example.description}</p>
-                  </div>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      ` : '';
+                        <div class="service-examples mt-4">
+                            <h4>Exemples de réalisations</h4>
+                            <div class="row">
+                                ${service.examples.map(example => `
+                                    <div class="col-md-6 mb-3">
+                                        <div class="example-card rounded-lg overflow-hidden">
+                                            <img src="${example.image}" class="img-fluid" alt="${example.title}">
+                                            <div class="example-info p-3">
+                                                <h5>${example.title}</h5>
+                                                <p>${example.description}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : '';
 
                     const modalHtml = `
-        <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content rounded-lg">
-              <div class="modal-header border-0">
-                <h3 class="modal-title">${service.title}</h3>
-                <button type="button" class="close" data-dismiss="modal">
-                  <span>&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="service-image mb-4">
-                  <img src="${service.image}" class="img-fluid rounded-lg" alt="${service.title}">
-                </div>
-                <div class="service-description mb-4">
-                  ${service.fullDescription}
-                </div>
-                <div class="service-process">
-                  <h4>Notre processus</h4>
-                  ${processHtml}
-                </div>
-                ${examplesHtml}
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
+                        <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content rounded-lg">
+                                    <div class="modal-header border-0">
+                                        <h3 class="modal-title">${service.title}</h3>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="service-image mb-4">
+                                            <img src="${service.image}" class="img-fluid rounded-lg" alt="${service.title}">
+                                        </div>
+                                        <div class="service-description mb-4">
+                                            ${service.fullDescription}
+                                        </div>
+                                        <div class="service-process">
+                                            <h4>Notre processus</h4>
+                                            ${processHtml}
+                                        </div>
+                                        ${examplesHtml}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
 
                     // Supprimer l'ancien modal s'il existe
                     const oldModal = document.getElementById('serviceModal');
@@ -890,86 +1055,128 @@
                 .catch(error => console.error('Erreur chargement détails service:', error));
         }
 
+        // Fonction pour charger le portfolio
         function loadPortfolio() {
-            fetch('data/portfolio.json')
+            // Charger les catégories pour le filtre
+            fetch('data/portfolio-categories.json')
                 .then(response => response.json())
-                .then(data => {
-                    const container = document.querySelector('.portfolio-container');
-                    let portfolioHtml = '';
+                .then(categoriesData => {
+                    // Charger les données du portfolio
+                    return fetch('data/portfolio.json')
+                        .then(response => response.json())
+                        .then(portfolioData => {
+                            return { categoriesData, portfolioData };
+                        });
+                })
+                .then(({ categoriesData, portfolioData }) => {
+                    // Générer les boutons de filtre
+                    const filterContainer = document.querySelector('.portfolio-filter');
 
-                    data.categories.forEach(category => {
-                        category.works.forEach((work, index) => {
-                            portfolioHtml += `
-            <div class="portfolio-item col-lg-3 col-md-6 col-12"
-                 data-aos="fade-up"
-                 data-aos-delay="${index * 100}"
-                 data-aos-duration="800"
-                 data-aos-easing="ease-out-cubic">
-              <div class="portfolio-thumb">
-                <div class="image-container">
-                  <a href="${work.image}" class="image-popup">
-                    <img src="${work.image}"
-                         class="img-fluid portfolio-image"
-                         alt="Portfolio item"
-                         loading="lazy">
-                    <div class="hover-overlay">
-                      <div class="hover-content">
-                        <i class="fas fa-search-plus"></i>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          `;
+                    // Ajouter les boutons de filtre pour chaque catégorie
+                    categoriesData.categories.forEach(category => {
+                        filterContainer.insertAdjacentHTML('beforeend', `
+                            <button class="portfolio-filter-btn" data-filter="${category.id}">
+                                ${category.name}
+                            </button>
+                        `);
+                    });
+
+                    // Générer les éléments du portfolio
+                    const portfolioContainer = document.querySelector('.portfolio-container');
+                    let portfolioItems = [];
+
+                    // Parcourir chaque catégorie et ses travaux
+                    portfolioData.categories.forEach(category => {
+                        category.works.forEach(work => {
+                            portfolioItems.push(`
+                                <div class="portfolio-item" data-category="${work.category}" data-aos="fade-up">
+                                    <div class="portfolio-item-image">
+                                        <img src="${work.image}" alt="${work.title}">
+                                        <div class="portfolio-item-overlay">
+                                            <h4>${work.title}</h4>
+                                            <p>${work.description}</p>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-item-content">
+                                        <h4 class="portfolio-item-title">${work.title}</h4>
+                                        <span class="portfolio-item-category">${getCategoryName(work.category, categoriesData.categories)}</span>
+                                        <span class="portfolio-item-year">${work.year}</span>
+                                        <p class="portfolio-item-description">${work.description}</p>
+                                    </div>
+                                </div>
+                            `);
                         });
                     });
 
-                    container.innerHTML = portfolioHtml;
+                    // Afficher tous les travaux
+                    portfolioContainer.innerHTML = portfolioItems.join('');
 
-                    // Initialisation de Masonry après le chargement des images
-                    imagesLoaded(container, function() {
-                        const masonry = new Masonry(container, {
-                            itemSelector: '.portfolio-item',
-                            columnWidth: '.portfolio-item',
-                            percentPosition: true,
-                            transitionDuration: '0.3s',
-                            gutter: 20
-                        });
+                    // Initialiser les boutons de filtre
+                    initializePortfolioFilter();
 
-                        // Réinitialiser Masonry après chaque animation AOS
-                        document.addEventListener('aos:in', () => {
-                            masonry.layout();
-                        });
-                    });
-
-                    // Initialisation de AOS
-                    AOS.init({
-                        duration: 800,
-                        easing: 'ease-out-cubic',
-                        once: false,
-                        mirror: true,
-                        offset: 50
-                    });
-
-                    // Initialisation de Magnific Popup
-                    $('.image-popup').magnificPopup({
-                        type: 'image',
-                        gallery: {
-                            enabled: true,
-                            navigateByImgClick: true,
-                            preload: [0, 1]
-                        },
-                        removalDelay: 300,
-                        mainClass: 'mfp-fade',
-                        zoom: {
-                            enabled: true,
-                            duration: 300,
-                            easing: 'ease-in-out'
-                        }
-                    });
+                    // Initialiser AOS
+                    AOS.refresh();
                 })
                 .catch(error => console.error('Erreur chargement portfolio:', error));
+        }
+
+        // Fonction pour obtenir le nom de la catégorie à partir de son ID
+        function getCategoryName(categoryId, categories) {
+            const category = categories.find(cat => cat.id === categoryId);
+            return category ? category.name : categoryId;
+        }
+
+        // Fonction pour initialiser le filtrage du portfolio
+        function initializePortfolioFilter() {
+            const filterButtons = document.querySelectorAll('.portfolio-filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Retirer la classe active de tous les boutons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+
+                    // Ajouter la classe active au bouton cliqué
+                    this.classList.add('active');
+
+                    // Récupérer la valeur du filtre
+                    const filterValue = this.getAttribute('data-filter');
+
+                    // Filtrer les éléments du portfolio
+                    portfolioItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.classList.remove('hidden');
+                            setTimeout(() => {
+                                item.style.display = 'block';
+                            }, 300);
+                        } else {
+                            item.classList.add('hidden');
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+
+                    // Vérifier s'il y a des éléments visibles
+                    setTimeout(() => {
+                        const visibleItems = document.querySelectorAll('.portfolio-item:not(.hidden)');
+                        if (visibleItems.length === 0) {
+                            const portfolioContainer = document.querySelector('.portfolio-container');
+                            portfolioContainer.innerHTML += `
+                                <div class="portfolio-empty">
+                                    <h3>Aucun projet dans cette catégorie</h3>
+                                    <p>Consultez nos autres catégories ou revenez plus tard.</p>
+                                </div>
+                            `;
+                        } else {
+                            const emptyMessage = document.querySelector('.portfolio-empty');
+                            if (emptyMessage) {
+                                emptyMessage.remove();
+                            }
+                        }
+                    }, 350);
+                });
+            });
         }
 
         function loadBlogPosts() {
@@ -1034,55 +1241,34 @@
                     const container = document.querySelector('.references-container');
 
                     const referencesHtml = data.references.map((reference, index) => `
-        <div class="col-lg-2 col-md-3 col-4"
-             data-aos="fade-up"
-             data-aos-delay="${index * 100}"
-             data-aos-duration="800">
-          <div class="reference-item">
-            <img src="${reference.logo}"
-                 class="references-logo img-fluid"
-                 alt="Logo référence"
-                 loading="lazy">
-          </div>
-        </div>
-      `).join('');
+                        <div class="col-lg-2 col-md-3 col-4"
+                            data-aos="fade-up"
+                            data-aos-delay="${index * 100}"
+                            data-aos-duration="800">
+                            <div class="reference-item">
+                                <img src="${reference.logo}"
+                                    class="references-logo img-fluid"
+                                    alt="Logo référence"
+                                    loading="lazy">
+                            </div>
+                        </div>
+                    `).join('');
 
                     container.innerHTML = referencesHtml;
-
-                    // Initialisation de AOS
-                    AOS.init({
-                        duration: 800,
-                        once: true,
-                        offset: 50
-                    });
                 })
                 .catch(error => console.error('Erreur chargement références:', error));
         }
-
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTeam();
-            loadServices();
-            loadPortfolio();
-            loadBlogPosts();
-            loadReferences();
-            initializeModalHandlers();
-            AOS.init({
-                duration: 800,
-                easing: 'ease-in-out',
-                once: true,
-                offset: 100
-            });
-        });
 
         // Initialisation des gestionnaires de modal
         function initializeModalHandlers() {
             const modal = document.getElementById('serviceModal');
             const closeBtn = document.querySelector('.close');
 
-            closeBtn.onclick = function() {
-                modal.style.display = 'none';
-            };
+            if (closeBtn) {
+                closeBtn.onclick = function() {
+                    modal.style.display = 'none';
+                };
+            }
 
             window.onclick = function(event) {
                 if (event.target === modal) {
@@ -1091,18 +1277,25 @@
             };
         }
 
-        // Initialisation de Magnific Popup
-        function initializeMagnificPopup() {
-            $('.image-popup').magnificPopup({
-                type: 'image',
-                gallery: {
-                    enabled: true
-                },
-                removalDelay: 300,
-                mainClass: 'mfp-fade'
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            loadHeroCarousel();
+            loadTeam();
+            loadServices();
+            loadPortfolio();
+            loadBlogPosts();
+            loadReferences();
+            initializeModalHandlers();
+
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: false,
+                mirror: true,
+                offset: 100
             });
-        }
+        });
     </script>
-    </main>
+</main>
 </body>
 </html>
