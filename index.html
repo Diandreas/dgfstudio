@@ -12,7 +12,7 @@
 
     <title>BGF Studio - Design graphique & Création visuelle</title>
 
-    <!-- CSS FILES - Utilisation de CDNs au lieu de fichiers locaux -->
+    <!-- CSS FILES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;400;700;900&display=swap" rel="stylesheet">
@@ -23,6 +23,239 @@
     <link href="css/templatemo-nomad-force.css" rel="stylesheet">
 
     <style>
+        /* Styles de base */
+        :root {
+            --primary-color: #150003;
+            --secondary-color: #343a40;
+            --accent-color: #7a7a7a;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+        /* Styles pour le modal de la galerie portfolio */
+        #portfolioImageModal .modal-content {
+            background-color: #fff;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        #portfolioImageModal .modal-dialog {
+            max-width: 90vw;
+        }
+
+        #portfolioImageModal .modal-body {
+            padding: 0;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #modalImage {
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        #portfolioImageModal .modal-header,
+        #portfolioImageModal .modal-footer {
+            background-color: #fff;
+            padding: 15px 20px;
+        }
+
+        #portfolioImageModal .btn-outline-secondary {
+            border-color: #dee2e6;
+            color: #495057;
+            transition: all 0.3s ease;
+        }
+
+        #portfolioImageModal .btn-outline-secondary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Transition du modal */
+        .modal.fade .modal-dialog {
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal.show .modal-dialog {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Styles de la galerie */
+        .portfolio-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 1.5 / 1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .zoom-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: white;
+            font-size: 2rem;
+            z-index: 2;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .zoom-icon {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .portfolio-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            #portfolioImageModal .modal-dialog {
+                max-width: 95vw;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            #portfolioImageModal .btn-outline-secondary {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .portfolio-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
+            }
+
+            #portfolioImageModal .modal-footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            #portfolioImageModal .btn-outline-secondary {
+                width: 100%;
+            }
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            letter-spacing: -0.5px;
+        }
+
+        .section-divider {
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 1.5rem auto;
+            position: relative;
+        }
+
+        .section-divider:before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 4px;
+            background: var(--accent-color);
+            left: -20px;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: var(--transition);
+        }
+
+        [data-aos="fade-up"].aos-animate .section-divider:before {
+            transform: scaleX(1);
+            transition-delay: 0.4s;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .btn-custom {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-custom:hover {
+            background: var(--dark-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
         /* Conteneur principal avec perspective pour effet 3D */
         .services-container {
             perspective: 1000px;
@@ -72,7 +305,7 @@
             background: linear-gradient(
                     45deg,
                     rgba(0, 0, 0, 0.7) 0%,
-                    rgba(0, 123, 255, 0.7) 100%
+                    rgba(220, 53, 69, 0.7) 100%
             );
             display: flex;
             align-items: center;
@@ -120,7 +353,6 @@
             transform: scale(1) rotate(0);
         }
 
-
         /* Amélioration du modal */
         .modal-content {
             border: none;
@@ -139,7 +371,596 @@
             opacity: 1;
         }
 
+        /* PORTFOLIO SECTION REDESIGN */
+        .portfolio-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-section:before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(220, 53, 69, 0.05);
+            top: -150px;
+            left: -150px;
+            z-index: 0;
+        }
+
+        .portfolio-section:after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 193, 7, 0.05);
+            bottom: -100px;
+            right: -100px;
+            z-index: 0;
+        }
+
+        /* NOUVEAU STYLE DE GALERIE */
+        .portfolio-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 1.5 / 1;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .zoom-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: white;
+            font-size: 2rem;
+            z-index: 2;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .zoom-icon {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        /* BLOG SECTION REDESIGN */
+        .blog-section {
+            padding: 5rem 0;
+            background: white;
+            position: relative;
+        }
+
+        .blog-timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog-timeline:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: #e9ecef;
+        }
+
+        .blog-item {
+            position: relative;
+            margin-bottom: 60px;
+            width: 45%;
+        }
+
+        .blog-item:nth-child(odd) {
+            float: left;
+            clear: right;
+        }
+
+        .blog-item:nth-child(even) {
+            float: right;
+            clear: left;
+        }
+
+        .blog-item:nth-child(odd):before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -12px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 0 5px rgba(220, 53, 69, 0.2);
+        }
+
+        .blog-item:nth-child(even):before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -12px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 0 5px rgba(220, 53, 69, 0.2);
+        }
+
+        .blog-card {
+            position: relative;
+            padding: 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: white;
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .blog-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .blog-card:hover .blog-img img {
+            transform: scale(1.1);
+        }
+
+        .blog-category {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px 15px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-date {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .blog-description {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .blog-link {
+            display: inline-block;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .blog-link:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .blog-link:hover:after {
+            width: 100%;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* REFERENCES SECTION */
+        .references-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .references-slider {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .reference-item {
+            padding: 20px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 140px;
+            width: 200px;
+            margin: 10px;
+        }
+
+        .reference-logo {
+            max-width: 90%;
+            max-height: 90%;
+            transition: var(--transition);
+            filter: grayscale(100%);
+            opacity: 0.7;
+        }
+
+        .reference-item:hover .reference-logo {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* CONTACT SECTION */
+        .contact-section {
+            padding: 5rem 0;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(220, 53, 69, 0.05) 0%, rgba(220, 53, 69, 0) 70%);
+        }
+
+        .contact-info-card {
+            position: relative;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .contact-decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-color) 100%);
+        }
+
+        .contact-info-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info-content h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .contact-method i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 15px;
+        }
+
+        .contact-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: #f8f9fa;
+            border-radius: 50%;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .contact-form-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+
+        .form-control,
+        .form-select {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            box-shadow: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-floating label {
+            padding: 16px;
+        }
+
+        .service-checkboxes {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .custom-checkbox .form-check-input {
+            width: 20px;
+            height: 20px;
+            margin-top: 0.2rem;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .form-check-label {
+            margin-left: 10px;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-submit:hover {
+            background: var(--dark-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* BOUTONS FLOTTANTS */
+        .floating-buttons {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Style du bouton WhatsApp */
+        .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            border-radius: 50%;
+            color: white;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            color: white;
+        }
+
+        .whatsapp-tooltip {
+            position: absolute;
+            left: -200px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-whatsapp:hover .whatsapp-tooltip {
+            opacity: 1;
+            left: -220px;
+        }
+
+        /* Animation de pulsation pour WhatsApp */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        .pulse-button {
+            animation: pulse 2s infinite;
+        }
+
+        /* Style du bouton retour en haut */
+        .btn-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-top:hover {
+            background-color: var(--dark-color);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        /* Lightbox styles */
+        .pswp__bg {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .pswp__button--arrow--left:before,
+        .pswp__button--arrow--right:before {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
         /* Responsive Design */
+        @media (max-width: 992px) {
+            .blog-timeline:before {
+                left: 20px;
+            }
+
+            .blog-item {
+                width: 100%;
+                padding-left: 45px;
+                float: none !important;
+                clear: both !important;
+            }
+
+            .blog-item:before {
+                left: 10px !important;
+                right: auto !important;
+            }
+
+            .portfolio-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
         @media (max-width: 768px) {
             .service-item {
                 margin-bottom: 2rem;
@@ -147,6 +968,56 @@
 
             .portfolio-thumb {
                 margin: 0 !important;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .portfolio-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+
+            .contact-info-card,
+            .contact-form-card {
+                padding: 25px;
+            }
+
+            .floating-buttons {
+                right: 15px;
+                bottom: 15px;
+            }
+
+            .btn-whatsapp {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .btn-top {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .portfolio-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
+            }
+
+            .blog-timeline:before {
+                display: none;
+            }
+
+            .blog-item {
+                padding-left: 0;
+            }
+
+            .blog-item:before {
+                display: none;
             }
         }
 
@@ -169,314 +1040,7 @@
             opacity: 1;
         }
 
-        .service-image-container {
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-        }
-
-
-        .service-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .service-overlay i {
-            color: white;
-            font-size: 2rem;
-            transform: scale(0);
-            transition: transform 0.3s ease;
-        }
-
-        .service-image-container:hover .portfolio-image {
-            transform: scale(1.05);
-        }
-
-        .service-image-container:hover .service-overlay {
-            opacity: 1;
-        }
-
-        .service-image-container:hover .service-overlay i {
-            transform: scale(1);
-        }
-
-        /* Styles pour le modal */
-        .modal-content {
-            border: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .step-number {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            background-color: #dc3545;
-            color: white;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .example-card {
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .example-card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Animation de fade pour le modal */
-        .modal.fade .modal-dialog {
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-        }
-
-        .modal.show .modal-dialog {
-            transform: scale(1);
-        }
-        .service-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-        }
-
-        .service-modal-content {
-            background-color: white;
-            margin: 10% auto;
-            padding: 20px;
-            width: 80%;
-            max-width: 700px;
-            border-radius: 8px;
-            position: relative;
-        }
-
-        .close {
-            position: absolute;
-            right: 20px;
-            top: 10px;
-            font-size: 28px;
-            cursor: pointer;
-        }
-
-        /* Ajout de styles pour les références */
-        .references-container {
-            padding: 2rem 0;
-        }
-
-        .reference-item {
-            padding: 1rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 120px;
-        }
-
-        .references-logo {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            filter: grayscale(100%);
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-
-        .reference-item:hover .references-logo {
-            filter: grayscale(0%);
-            opacity: 1;
-            transform: scale(1.05);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .reference-item {
-                height: 100px;
-                padding: 0.75rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .reference-item {
-                height: 80px;
-                padding: 0.5rem;
-            }
-        }
-
-        /* NOUVEAU STYLE POUR LE PORTFOLIO */
-        .portfolio-section {
-            padding: 4rem 0;
-            background-color: #f9f9f9;
-        }
-
-        .portfolio-filter {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-            gap: 10px;
-        }
-
-        .portfolio-filter-btn {
-            padding: 8px 20px;
-            border: none;
-            background-color: #fff;
-            color: #333;
-            font-weight: 500;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .portfolio-filter-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .portfolio-filter-btn.active {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .portfolio-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 1rem 0;
-        }
-
-        .portfolio-item {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            transform: translateY(0);
-            transition: all 0.4s ease;
-            height: 100%;
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .portfolio-item.hidden {
-            display: none;
-            opacity: 0;
-            transform: scale(0.8);
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-
-        .portfolio-item-image {
-            position: relative;
-            overflow: hidden;
-            height: 250px;
-        }
-
-        .portfolio-item-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .portfolio-item:hover .portfolio-item-image img {
-            transform: scale(1.1);
-        }
-
-        .portfolio-item-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            padding: 20px;
-            color: white;
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
-        }
-
-        .portfolio-item:hover .portfolio-item-overlay {
-            transform: translateY(0);
-        }
-
-        .portfolio-item-content {
-            padding: 20px;
-            background-color: white;
-        }
-
-        .portfolio-item-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .portfolio-item-category {
-            display: inline-block;
-            padding: 4px 10px;
-            background-color: #f0f0f0;
-            color: #666;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .portfolio-item-year {
-            font-size: 0.85rem;
-            color: #999;
-        }
-
-        .portfolio-item-description {
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
-        .portfolio-empty {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 3rem;
-            color: #666;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Animation d'apparition */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .portfolio-item {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        /* Pour le hero carousel */
+        /* Hero carousel */
         .hero-carousel {
             height: 100vh;
             position: relative;
@@ -645,127 +1209,183 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services Section - REDESIGNED -->
     <section class="section-padding" id="services">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <h2 class="mb-5 text-center" data-aos="fade-up">Nos Services</h2>
+                <div class="col-12 text-center">
+                    <h2 class="section-title" data-aos="fade-up">Nos Services</h2>
+                    <div class="section-divider" data-aos="fade-up" data-aos-delay="200"></div>
+                    <p class="section-subtitle mb-5" data-aos="fade-up" data-aos-delay="300">
+                        Des solutions créatives pour tous vos besoins en communication visuelle
+                    </p>
                 </div>
             </div>
-            <div class="row services-container">
+
+            <div class="row services-container g-4">
                 <!-- Services will be loaded dynamically -->
             </div>
         </div>
     </section>
 
-    <!-- Portfolio Section -->
+    <!-- Portfolio Section - REDESIGNED WITH CLICKABLE GALLERY -->
     <section class="portfolio-section" id="portfolio">
         <div class="container">
             <div class="row">
-                <div class="col-12 mb-5">
-                    <h2 class="text-center mb-4" data-aos="fade-up">Notre Portfolio</h2>
-                    <p class="text-center" data-aos="fade-up" data-aos-delay="200">
-                        Découvrez une sélection de nos meilleures réalisations dans différents domaines de création.
+                <div class="col-12 text-center">
+                    <h2 class="section-title" data-aos="fade-up">Notre Portfolio</h2>
+                    <div class="section-divider" data-aos="fade-up" data-aos-delay="200"></div>
+                    <p class="section-subtitle mb-5" data-aos="fade-up" data-aos-delay="300">
+                        Découvrez nos créations à travers une sélection de projets récents
                     </p>
                 </div>
-                <div class="col-12">
-                    <div class="portfolio-filter" data-aos="fade-up" data-aos-delay="300">
-                        <button class="portfolio-filter-btn active" data-filter="all">Tous les projets</button>
-                        <!-- Les boutons de filtre seront chargés dynamiquement -->
+            </div>
+
+            <div class="portfolio-gallery" data-aos="fade-up" data-aos-delay="400">
+                <!-- Portfolio items will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section - REDESIGNED -->
+    <section class="blog-section" id="blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="section-title" data-aos="fade-up">News & Events</h2>
+                    <div class="section-divider" data-aos="fade-up" data-aos-delay="200"></div>
+                    <p class="section-subtitle mb-5" data-aos="fade-up" data-aos-delay="300">
+                        Restez informé de nos actualités et événements
+                    </p>
+                </div>
+            </div>
+
+            <div class="blog-timeline clearfix" data-aos="fade-up" data-aos-delay="400">
+                <!-- Articles chargés dynamiquement -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section - REDESIGNED -->
+    <!-- Section Contact modifiée avec EmailJS -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="section-title" data-aos="fade-up">Réserver Maintenant</h2>
+                    <div class="section-divider" data-aos="fade-up" data-aos-delay="200"></div>
+                    <p class="section-subtitle mb-5" data-aos="fade-up" data-aos-delay="300">
+                        Contactez-nous pour discuter de votre projet
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-5 mb-4 mb-lg-0" data-aos="fade-right" data-aos-delay="300">
+                    <div class="contact-info-card">
+                        <div class="contact-decoration"></div>
+                        <div class="contact-info-content">
+                            <h3>Parlons de votre projet</h3>
+                            <p>Nous sommes impatients de collaborer avec vous pour donner vie à vos idées. Remplissez le formulaire ou contactez-nous directement.</p>
+
+                            <div class="contact-method">
+                                <i class="bi bi-envelope"></i>
+                                <span>bgfstudio.2022@gmail.com</span>
+                            </div>
+
+                            <div class="contact-method">
+                                <i class="bi bi-geo-alt"></i>
+                                <span>Cameroun</span>
+                            </div>
+
+                            <div class="contact-social">
+                                <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                                <a href="https://wa.me/237697329475" class="social-icon"><i class="bi bi-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7" data-aos="fade-left" data-aos-delay="400">
+                    <div class="contact-form-card">
+                        <form id="contactForm" class="contact-form">
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Votre nom" required>
+                                        <label for="name">Nom Complet</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Votre email" required>
+                                        <label for="email">Email</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <textarea class="form-control" id="message" name="message" placeholder="Votre message" style="height: 150px" required></textarea>
+                                <label for="message">Votre Projet</label>
+                            </div>
+
+                            <div class="service-checkboxes mb-4">
+                                <p class="mb-2">Services souhaités <sup class="text-danger">*</sup></p>
+                                <div class="row g-2">
+                                    <div class="col-md-4">
+                                        <div class="form-check custom-checkbox">
+                                            <input type="checkbox" class="form-check-input" id="design" name="service" value="Design Graphique">
+                                            <label class="form-check-label" for="design">Design Graphique</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check custom-checkbox">
+                                            <input type="checkbox" class="form-check-input" id="photo" name="service" value="Photographie">
+                                            <label class="form-check-label" for="photo">Photographie</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check custom-checkbox">
+                                            <input type="checkbox" class="form-check-input" id="web" name="service" value="Web Design">
+                                            <label class="form-check-label" for="web">Web Design</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-submit" id="submitButton">
+                                <span class="btn-text">Envoyer le Message</span>
+                                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            </button>
+
+                            <div class="alert mt-3 d-none" id="formAlert" role="alert"></div>
+                        </form>
                     </div>
                 </div>
             </div>
-
-            <div class="portfolio-container">
-                <!-- Les éléments du portfolio seront chargés dynamiquement -->
-            </div>
         </div>
     </section>
 
-    <!-- Blog Section -->
-    <section class="news section-padding" id="blog">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="mb-5 text-center" data-aos="fade-up">News & Events</h2>
-                </div>
-            </div>
-            <div class="row blog-container">
-                <!-- Blog posts will be loaded dynamically -->
-            </div>
-        </div>
-    </section>
+    <!-- Ajouter EmailJS SDK dans la section scripts -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
-    <!-- Contact Section -->
-    <section class="contact section-padding" id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 col-12 mx-auto">
-                    <h2 class="mb-4 text-center" data-aos="fade-up">Réserver maintenant</h2>
-
-                    <form action="#" method="post" class="contact-form" role="form" data-aos="fade-up">
-                        <div class="row">
-                            <div class="col-lg-6 col-6">
-                                <label for="name" class="form-label">Nom <sup class="text-danger">*</sup></label>
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Votre nom" required>
-                            </div>
-
-                            <div class="col-lg-6 col-6">
-                                <label for="email" class="form-label">Email <sup class="text-danger">*</sup></label>
-                                <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Votre email" required>
-                            </div>
-
-                            <div class="col-12 my-4">
-                                <label for="message" class="form-label">Votre projet</label>
-                                <textarea name="message" rows="6" class="form-control" id="message" placeholder="Décrivez votre projet" required></textarea>
-                            </div>
-
-                            <div class="col-12">
-                                <label class="form-label">Services souhaités<sup class="text-danger">*</sup></label>
-                            </div>
-
-                            <div class="col-lg-4 col-12">
-                                <div class="form-check">
-                                    <input type="checkbox" id="design" name="service[]" class="form-check-input">
-                                    <label class="form-check-label" for="design">Design graphique</label>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-12 my-2 my-lg-0">
-                                <div class="form-check">
-                                    <input type="checkbox" id="photo" name="service[]" class="form-check-input">
-                                    <label class="form-check-label" for="photo">Photographie</label>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-12">
-                                <div class="form-check">
-                                    <input type="checkbox" id="web" name="service[]" class="form-check-input">
-                                    <label class="form-check-label" for="web">Web Design</label>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-5 col-12 mx-auto mt-5">
-                                <button type="submit" class="form-control">Envoyer le message</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- References Section -->
+    <!-- References Section - REDESIGNED -->
     <section class="references-section" id="references">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <h2 class="mb-5 text-center" data-aos="fade-up">Nos Références</h2>
+                <div class="col-12 text-center">
+                    <h2 class="section-title" data-aos="fade-up">Nos Références</h2>
+                    <div class="section-divider" data-aos="fade-up" data-aos-delay="200"></div>
+                    <p class="section-subtitle mb-5" data-aos="fade-up" data-aos-delay="300">
+                        Ils nous font confiance
+                    </p>
                 </div>
             </div>
-            <div class="row references-container">
-                <!-- Les références seront chargées dynamiquement -->
+
+            <div class="references-slider" data-aos="fade-up" data-aos-delay="400">
+                <!-- Références chargées dynamiquement -->
             </div>
         </div>
     </section>
@@ -793,44 +1413,48 @@
                     <ul class="social-icon">
                         <li><a href="#" class="social-icon-link bi-facebook"></a></li>
                         <li><a href="#" class="social-icon-link bi-instagram"></a></li>
-                        <li><a href="#" class="social-icon-link bi-whatsapp"></a></li>
+                        <li><a href="https://wa.me/237697329475" class="social-icon-link bi-whatsapp"></a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Service Modal -->
-    <div id="serviceModal" class="service-modal">
-        <div class="service-modal-content">
-            <span class="close">&times;</span>
-            <div id="modalContent"></div>
-        </div>
+    <!-- BOUTONS FLOTTANTS -->
+    <div class="floating-buttons">
+        <!-- Bouton WhatsApp -->
+        <a href="https://wa.me/237697329475" class="btn-whatsapp pulse-button" target="_blank">
+            <i class="bi bi-whatsapp"></i>
+            <span class="whatsapp-tooltip">Contactez-nous sur WhatsApp</span>
+        </a>
+
+        <!-- Bouton retour en haut -->
+        <a href="#" class="btn-top" id="backToTop">
+            <i class="bi bi-arrow-up"></i>
+        </a>
     </div>
 
-    <!-- Portfolio Modal -->
-    <div class="modal fade" id="portfolioModal" tabindex="-1" aria-labelledby="portfolioModalLabel" aria-hidden="true">
+    <!-- Modals -->
+    <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title" id="portfolioModalTitle"></h5>
+                    <h5 class="modal-title" id="serviceModalTitle"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="portfolioModalBody">
-                    <!-- Le contenu détaillé du projet sera chargé ici -->
+                <div class="modal-body" id="serviceModalBody">
+                    <!-- Le contenu détaillé du service sera chargé ici -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT FILES - Utilisation de CDNs au lieu de fichiers locaux -->
+    <!-- JAVASCRIPT FILES -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-    <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
-    <script src="https://unpkg.com/imagesloaded@5.0.0/imagesloaded.pkgd.min.js"></script>
     <script src="js/custom.js"></script>
 
     <script>
@@ -941,7 +1565,84 @@
                     });
                 });
         }
+        function initEmailJS() {
+            // Remplacer "YOUR_PUBLIC_KEY" par votre clé publique EmailJS
+            // Vous devez créer un compte gratuit sur https://www.emailjs.com/
+            emailjs.init("service_ia6aqsw");
+        }
+        function setupContactForm() {
+            const contactForm = document.getElementById('contactForm');
+            const submitButton = document.getElementById('submitButton');
+            const spinner = submitButton.querySelector('.spinner-border');
+            const buttonText = submitButton.querySelector('.btn-text');
+            const formAlert = document.getElementById('formAlert');
 
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    // Afficher le spinner et désactiver le bouton
+                    spinner.classList.remove('d-none');
+                    buttonText.textContent = 'Envoi en cours...';
+                    submitButton.disabled = true;
+                    formAlert.classList.add('d-none');
+
+                    // Récupérer les services sélectionnés
+                    const checkboxes = document.querySelectorAll('input[name="service"]:checked');
+                    const selectedServices = Array.from(checkboxes).map(cb => cb.value).join(', ');
+
+                    // Préparer les paramètres pour EmailJS
+                    const templateParams = {
+                        name: document.getElementById('name').value,
+                        email: document.getElementById('email').value,
+                        message: document.getElementById('message').value,
+                        services: selectedServices || 'Aucun service sélectionné'
+                    };
+
+                    // Envoyer l'email via EmailJS
+                    // Remplacer "YOUR_SERVICE_ID" et "YOUR_TEMPLATE_ID" par vos identifiants EmailJS
+                    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                        .then(function(response) {
+                            // Succès
+                            spinner.classList.add('d-none');
+                            buttonText.textContent = 'Envoyé!';
+
+                            // Afficher un message de succès
+                            formAlert.textContent = 'Votre message a été envoyé avec succès! Nous vous contacterons bientôt.';
+                            formAlert.classList.remove('d-none', 'alert-danger');
+                            formAlert.classList.add('alert-success');
+
+                            // Réinitialiser le formulaire après 2 secondes
+                            setTimeout(() => {
+                                contactForm.reset();
+                                submitButton.disabled = false;
+                                buttonText.textContent = 'Envoyer le Message';
+                            }, 2000);
+                        }, function(error) {
+                            // Erreur
+                            console.error('Erreur d\'envoi:', error);
+                            spinner.classList.add('d-none');
+                            buttonText.textContent = 'Envoyer le Message';
+                            submitButton.disabled = false;
+
+                            // Afficher un message d'erreur
+                            formAlert.textContent = 'Une erreur s\'est produite lors de l\'envoi du message. Veuillez réessayer plus tard.';
+                            formAlert.classList.remove('d-none', 'alert-success');
+                            formAlert.classList.add('alert-danger');
+                        });
+                });
+            }
+        }
+
+        // Ajouter cette fonction à votre initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Autres initialisations...
+
+            initEmailJS();
+            setupContactForm();
+
+            // Reste du code d'initialisation...
+        });
         // Fonction pour charger les services
         function loadServices() {
             fetch('data/services.json')
@@ -949,25 +1650,22 @@
                 .then(data => {
                     const container = document.querySelector('.services-container');
                     const servicesHtml = data.services.map((service, index) => `
-                        <div class="col-lg-3 col-12 service-item"
+                        <div class="col-lg-4 col-md-6 col-12 service-item"
                             data-aos="${index % 2 === 0 ? 'fade-right' : 'fade-left'}"
-                            data-aos-delay="${index * 150}"
-                            data-aos-duration="1000"
-                            data-aos-easing="ease-out-cubic">
-                            <div class="portfolio-thumb ${index > 0 ? 'mt-5 mt-lg-0' : ''} mb-5">
-                                <div class="service-image-container" onclick="showServiceModal('${service.id}')">
-                                    <div class="image-wrapper">
-                                        <img src="${service.image}"
-                                            class="img-fluid portfolio-image rounded-lg shadow"
-                                            alt="${service.title}">
-                                        <div class="service-overlay rounded-lg">
-                                            <i class="bi bi-plus-circle pulse"></i>
-                                        </div>
-                                    </div>
+                            data-aos-delay="${index * 100}"
+                            data-aos-duration="1000">
+                            <div class="service-card">
+                                <div class="service-card-img">
+                                    <img src="${service.image}" alt="${service.title}">
                                 </div>
-                                <div class="portfolio-info" data-aos="fade-up" data-aos-delay="${(index * 150) + 200}">
-                                    <h4 class="portfolio-title mb-0">${service.title}</h4>
-                                    <p class="text-danger">${service.shortDescription}</p>
+                                <div class="service-card-body">
+                                    <h3 class="service-card-title">${service.title}</h3>
+                                    <p class="service-card-description">${service.shortDescription}</p>
+                                    <div class="mt-auto pt-3">
+                                        <button class="btn-custom" onclick="showServiceModal('${service.id}')">
+                                            En savoir plus
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -988,24 +1686,25 @@
 
                     const processHtml = service.process.map(p => `
                         <div class="process-step mb-4">
-                            <h5 class="step-title">
-                                <span class="step-number">${p.step}</span> ${p.title}
-                            </h5>
-                            <p class="step-description">${p.description}</p>
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="step-number">${p.step}</span>
+                                <h5 class="step-title mb-0">${p.title}</h5>
+                            </div>
+                            <p class="step-description ps-4">${p.description}</p>
                         </div>
                     `).join('');
 
                     const examplesHtml = service.examples.length ? `
-                        <div class="service-examples mt-4">
-                            <h4>Exemples de réalisations</h4>
+                        <div class="service-examples mt-5">
+                            <h4 class="mb-4">Exemples de réalisations</h4>
                             <div class="row">
                                 ${service.examples.map(example => `
                                     <div class="col-md-6 mb-3">
-                                        <div class="example-card rounded-lg overflow-hidden">
-                                            <img src="${example.image}" class="img-fluid" alt="${example.title}">
-                                            <div class="example-info p-3">
-                                                <h5>${example.title}</h5>
-                                                <p>${example.description}</p>
+                                        <div class="card border-0 shadow-sm h-100">
+                                            <img src="${example.image}" class="card-img-top" alt="${example.title}">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${example.title}</h5>
+                                                <p class="card-text">${example.description}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -1014,219 +1713,148 @@
                         </div>
                     ` : '';
 
-                    const modalHtml = `
-                        <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content rounded-lg">
+                    // Mettre à jour le modal
+                    document.getElementById('serviceModalTitle').textContent = service.title;
+                    document.getElementById('serviceModalBody').innerHTML = `
+                        <div class="service-image mb-4">
+                            <img src="${service.image}" class="img-fluid rounded" alt="${service.title}">
+                        </div>
+                        <div class="service-description mb-4">
+                            <p>${service.fullDescription}</p>
+                        </div>
+                        <div class="service-process">
+                            <h4 class="mb-4">Notre processus</h4>
+                            ${processHtml}
+                        </div>
+                        ${examplesHtml}
+                    `;
+
+                    // Afficher le modal
+                    const serviceModalEl = document.getElementById('serviceModal');
+                    const serviceModal = new bootstrap.Modal(serviceModalEl);
+                    serviceModal.show();
+                })
+                .catch(error => console.error('Erreur chargement détails service:', error));
+        }
+
+        // Fonction pour charger le portfolio - VERSION GALERIE CLIQUABLE
+        // Fonction pour charger le portfolio avec un modal Bootstrap
+        function loadPortfolio() {
+            fetch('data/portfolio.json')
+                .then(response => response.json())
+                .then(data => {
+                    const portfolioContainer = document.querySelector('.portfolio-gallery');
+
+                    if (data.categories && data.categories.length > 0) {
+                        const works = data.categories[0].works;
+
+                        // Créer un tableau d'éléments pour la galerie
+                        const portfolioItems = works.map((work, index) => `
+                    <div class="gallery-item" data-aos="fade-up" data-aos-delay="${index % 5 * 100}"
+                        onclick="openPortfolioModal(${index})">
+                        <img src="${work.image}" alt="Réalisation BGF Studio">
+                        <i class="bi bi-search zoom-icon"></i>
+                    </div>
+                `).join('');
+
+                        portfolioContainer.innerHTML = portfolioItems;
+
+                        // Stocker les images dans une variable globale pour le modal
+                        window.portfolioImages = works.map(work => work.image);
+
+                        // Ajouter le modal au body s'il n'existe pas déjà
+                        if (!document.getElementById('portfolioImageModal')) {
+                            const modalHTML = `
+                        <div class="modal fade" id="portfolioImageModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                <div class="modal-content">
                                     <div class="modal-header border-0">
-                                        <h3 class="modal-title">${service.title}</h3>
-                                        <button type="button" class="close" data-dismiss="modal">
-                                            <span>&times;</span>
-                                        </button>
+                                        <h5 class="modal-title">Notre Portfolio</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="service-image mb-4">
-                                            <img src="${service.image}" class="img-fluid rounded-lg" alt="${service.title}">
-                                        </div>
-                                        <div class="service-description mb-4">
-                                            ${service.fullDescription}
-                                        </div>
-                                        <div class="service-process">
-                                            <h4>Notre processus</h4>
-                                            ${processHtml}
-                                        </div>
-                                        ${examplesHtml}
+                                    <div class="modal-body text-center p-0">
+                                        <img id="modalImage" src="" class="img-fluid" alt="Image portfolio">
+                                    </div>
+                                    <div class="modal-footer justify-content-between border-0">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="changeModalImage('prev')">
+                                            <i class="bi bi-arrow-left"></i> Précédent
+                                        </button>
+                                        <span id="imageCounter" class="text-muted"></span>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="changeModalImage('next')">
+                                            Suivant <i class="bi bi-arrow-right"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     `;
-
-                    // Supprimer l'ancien modal s'il existe
-                    const oldModal = document.getElementById('serviceModal');
-                    if (oldModal) oldModal.remove();
-
-                    // Ajouter le nouveau modal au body
-                    document.body.insertAdjacentHTML('beforeend', modalHtml);
-
-                    // Afficher le modal avec animation
-                    $('#serviceModal').modal('show');
-                })
-                .catch(error => console.error('Erreur chargement détails service:', error));
-        }
-
-        // Fonction pour charger le portfolio
-        function loadPortfolio() {
-            // Charger les catégories pour le filtre
-            fetch('data/portfolio-categories.json')
-                .then(response => response.json())
-                .then(categoriesData => {
-                    // Charger les données du portfolio
-                    return fetch('data/portfolio.json')
-                        .then(response => response.json())
-                        .then(portfolioData => {
-                            return { categoriesData, portfolioData };
-                        });
-                })
-                .then(({ categoriesData, portfolioData }) => {
-                    // Générer les boutons de filtre
-                    const filterContainer = document.querySelector('.portfolio-filter');
-
-                    // Ajouter les boutons de filtre pour chaque catégorie
-                    categoriesData.categories.forEach(category => {
-                        filterContainer.insertAdjacentHTML('beforeend', `
-                            <button class="portfolio-filter-btn" data-filter="${category.id}">
-                                ${category.name}
-                            </button>
-                        `);
-                    });
-
-                    // Générer les éléments du portfolio
-                    const portfolioContainer = document.querySelector('.portfolio-container');
-                    let portfolioItems = [];
-
-                    // Parcourir chaque catégorie et ses travaux
-                    portfolioData.categories.forEach(category => {
-                        category.works.forEach(work => {
-                            portfolioItems.push(`
-                                <div class="portfolio-item" data-category="${work.category}" data-aos="fade-up">
-                                    <div class="portfolio-item-image">
-                                        <img src="${work.image}" alt="${work.title}">
-                                        <div class="portfolio-item-overlay">
-                                            <h4>${work.title}</h4>
-                                            <p>${work.description}</p>
-                                        </div>
-                                    </div>
-                                    <div class="portfolio-item-content">
-                                        <h4 class="portfolio-item-title">${work.title}</h4>
-                                        <span class="portfolio-item-category">${getCategoryName(work.category, categoriesData.categories)}</span>
-                                        <span class="portfolio-item-year">${work.year}</span>
-                                        <p class="portfolio-item-description">${work.description}</p>
-                                    </div>
-                                </div>
-                            `);
-                        });
-                    });
-
-                    // Afficher tous les travaux
-                    portfolioContainer.innerHTML = portfolioItems.join('');
-
-                    // Initialiser les boutons de filtre
-                    initializePortfolioFilter();
-
-                    // Initialiser AOS
-                    AOS.refresh();
-                })
-                .catch(error => console.error('Erreur chargement portfolio:', error));
-        }
-
-        // Fonction pour obtenir le nom de la catégorie à partir de son ID
-        function getCategoryName(categoryId, categories) {
-            const category = categories.find(cat => cat.id === categoryId);
-            return category ? category.name : categoryId;
-        }
-
-        // Fonction pour initialiser le filtrage du portfolio
-        function initializePortfolioFilter() {
-            const filterButtons = document.querySelectorAll('.portfolio-filter-btn');
-            const portfolioItems = document.querySelectorAll('.portfolio-item');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Retirer la classe active de tous les boutons
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-
-                    // Ajouter la classe active au bouton cliqué
-                    this.classList.add('active');
-
-                    // Récupérer la valeur du filtre
-                    const filterValue = this.getAttribute('data-filter');
-
-                    // Filtrer les éléments du portfolio
-                    portfolioItems.forEach(item => {
-                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                            item.classList.remove('hidden');
-                            setTimeout(() => {
-                                item.style.display = 'block';
-                            }, 300);
-                        } else {
-                            item.classList.add('hidden');
-                            setTimeout(() => {
-                                item.style.display = 'none';
-                            }, 300);
+                            document.body.insertAdjacentHTML('beforeend', modalHTML);
                         }
-                    });
-
-                    // Vérifier s'il y a des éléments visibles
-                    setTimeout(() => {
-                        const visibleItems = document.querySelectorAll('.portfolio-item:not(.hidden)');
-                        if (visibleItems.length === 0) {
-                            const portfolioContainer = document.querySelector('.portfolio-container');
-                            portfolioContainer.innerHTML += `
-                                <div class="portfolio-empty">
-                                    <h3>Aucun projet dans cette catégorie</h3>
-                                    <p>Consultez nos autres catégories ou revenez plus tard.</p>
-                                </div>
-                            `;
-                        } else {
-                            const emptyMessage = document.querySelector('.portfolio-empty');
-                            if (emptyMessage) {
-                                emptyMessage.remove();
-                            }
-                        }
-                    }, 350);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur chargement portfolio:', error);
+                    document.querySelector('.portfolio-gallery').innerHTML =
+                        '<div class="col-12 text-center p-5">Impossible de charger le portfolio. Veuillez réessayer plus tard.</div>';
                 });
-            });
         }
 
+        // Index de l'image actuellement affichée dans le modal
+        let currentImageIndex = 0;
+
+        // Fonction pour ouvrir le modal avec l'image sélectionnée
+        function openPortfolioModal(index) {
+            currentImageIndex = index;
+            const modalImage = document.getElementById('modalImage');
+            const imageCounter = document.getElementById('imageCounter');
+
+            // Définir l'image du modal
+            modalImage.src = window.portfolioImages[index];
+
+            // Mettre à jour le compteur d'images
+            imageCounter.textContent = `Image ${index + 1} sur ${window.portfolioImages.length}`;
+
+            // Ouvrir le modal
+            const portfolioModal = new bootstrap.Modal(document.getElementById('portfolioImageModal'));
+            portfolioModal.show();
+        }
+
+        // Fonction pour changer l'image dans le modal
+        function changeModalImage(direction) {
+            if (direction === 'next') {
+                currentImageIndex = (currentImageIndex + 1) % window.portfolioImages.length;
+            } else {
+                currentImageIndex = (currentImageIndex - 1 + window.portfolioImages.length) % window.portfolioImages.length;
+            }
+
+            // Mettre à jour l'image et le compteur
+            document.getElementById('modalImage').src = window.portfolioImages[currentImageIndex];
+            document.getElementById('imageCounter').textContent = `Image ${currentImageIndex + 1} sur ${window.portfolioImages.length}`;
+        }
+
+        // Fonction pour charger les articles de blog
         function loadBlogPosts() {
             fetch('data/blog.json')
                 .then(response => response.json())
                 .then(data => {
-                    const container = document.querySelector('.blog-container');
-                    let blogHtml = '';
+                    const container = document.querySelector('.blog-timeline');
 
-                    data.posts.forEach((post, index) => {
-                        if (index === 0) {
-                            blogHtml += `
-                                <div class="col-lg-6 col-12 mb-5 mb-lg-0">
-                                    <div class="news-thumb" data-aos="fade-up">
-                                        <a href="news-detail.html?id=${post.id}" class="news-image-hover news-image-hover-warning">
-                                            <img src="${post.image}" class="img-fluid large-news-image news-image" alt="${post.title}">
-                                        </a>
-                                        <div class="news-category bg-warning text-white">${post.category}</div>
-                                        <div class="news-text-info">
-                                            <h5 class="news-title">
-                                                <a href="news-detail.html?id=${post.id}" class="news-title-link">${post.title}</a>
-                                            </h5>
-                                            <span class="text-muted">${post.date}</span>
-                                        </div>
-                                    </div>
+                    const blogHtml = data.posts.map((post, index) => `
+                        <div class="blog-item" data-aos="fade-up" data-aos-delay="${index * 100}">
+                            <div class="blog-card">
+                                <div class="blog-img">
+                                    <img src="${post.image}" alt="${post.title}">
                                 </div>
-                            `;
-                        } else {
-                            blogHtml += `
-                                <div class="col-lg-6 col-12">
-                                    <div class="news-thumb news-two-column d-flex flex-column flex-lg-row" data-aos="fade-up">
-                                        <div class="news-top w-100">
-                                            <a href="news-detail.html?id=${post.id}" class="news-image-hover news-image-hover-warning">
-                                                <img src="${post.image}" class="img-fluid news-image" alt="${post.title}">
-                                            </a>
-                                            <div class="news-category bg-warning text-white">${post.category}</div>
-                                        </div>
-                                        <div class="news-bottom w-100">
-                                            <div class="news-text-info">
-                                                <h5 class="news-title">
-                                                    <a href="news-detail.html?id=${post.id}" class="news-title-link">${post.title}</a>
-                                                </h5>
-                                                <span class="text-muted">${post.date}</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <span class="blog-category">${post.category}</span>
+                                <div class="blog-content">
+                                    <span class="blog-date">${post.date}</span>
+                                    <h3 class="blog-title">${post.title}</h3>
+                                    <p class="blog-description">${post.shortDescription}</p>
+                                    <a href="news-detail.html?id=${post.id}" class="blog-link">Lire plus</a>
                                 </div>
-                            `;
-                        }
-                    });
+                            </div>
+                        </div>
+                    `).join('');
 
                     container.innerHTML = blogHtml;
                 })
@@ -1238,19 +1866,11 @@
             fetch('data/references.json')
                 .then(response => response.json())
                 .then(data => {
-                    const container = document.querySelector('.references-container');
+                    const container = document.querySelector('.references-slider');
 
                     const referencesHtml = data.references.map((reference, index) => `
-                        <div class="col-lg-2 col-md-3 col-4"
-                            data-aos="fade-up"
-                            data-aos-delay="${index * 100}"
-                            data-aos-duration="800">
-                            <div class="reference-item">
-                                <img src="${reference.logo}"
-                                    class="references-logo img-fluid"
-                                    alt="Logo référence"
-                                    loading="lazy">
-                            </div>
+                        <div class="reference-item" data-aos="fade-up" data-aos-delay="${index * 50}">
+                            <img src="${reference.logo}" class="reference-logo" alt="Logo client">
                         </div>
                     `).join('');
 
@@ -1259,22 +1879,27 @@
                 .catch(error => console.error('Erreur chargement références:', error));
         }
 
-        // Initialisation des gestionnaires de modal
-        function initializeModalHandlers() {
-            const modal = document.getElementById('serviceModal');
-            const closeBtn = document.querySelector('.close');
+        // Gestion du bouton "retour en haut"
+        function initBackToTopButton() {
+            const backToTopButton = document.getElementById('backToTop');
 
-            if (closeBtn) {
-                closeBtn.onclick = function() {
-                    modal.style.display = 'none';
-                };
-            }
-
-            window.onclick = function(event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
+            // Afficher/masquer le bouton en fonction du défilement
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
                 }
-            };
+            });
+
+            // Action du bouton
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
         }
 
         // Initialisation
@@ -1285,7 +1910,7 @@
             loadPortfolio();
             loadBlogPosts();
             loadReferences();
-            initializeModalHandlers();
+            initBackToTopButton();
 
             AOS.init({
                 duration: 800,
